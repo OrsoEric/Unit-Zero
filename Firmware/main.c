@@ -43,6 +43,11 @@
 **			CONFIG
 **			>servo_off
 **			>SERVO_MAX_SPEED
+**		>Porting to LCD library V3. Here the driver sync the display with a
+**		memory. The user can make 1M printchar a second and the driver still
+**		won't bug out. Muchbetter abstraction and lower overhead compared
+**		to command fifo approach.
+**		>Added DPRINTEF macros to at_utils. used in codeblock.
 ****************************************************************************/
 
 /****************************************************************************
@@ -100,8 +105,8 @@
 *****************************************************************************
 **	PB0			|	front DX
 **	PB1			|	front SX
-**	PB2			|	rear SX
-**	PB3			|	rear DX
+**	PB2			|	rear DX
+**	PB3			|	rear SX
 **	PB4			|	front hip
 **	PB5			|	rear hip
 **	PB6			| 	core joint
@@ -199,49 +204,34 @@
 //Those are the flags updated by ISRs
 volatile Isr_flags f;
 //Status variabile for the servos, keep track of which servo to do next
-volatile U8 servo_cnt;
-//each servo has 1 bit, it's rised when the interpolator is done
-volatile U8 servo_idle;
+volatile U8 servo_cnt	= N_SERVOS;
 
 	//-----------------------------------------------------------------------
 	//	SERVOS VARS
 	//-----------------------------------------------------------------------
 
-//servo direction correction mask, allow for the logical direction of a joint to be reversed in sign
-//each bit is associated with a servo, if the bit is '1', the direction is reversed
-U8 servo_dir			= SERVO_DIR;
+//One flag per servo. '1' if the servo is keeping up with target_pos
+U8 servo_lock			= 0x00;
+//Current position of the servos. Used by the driver, user should not write here
+U16 servo_delay[ N_SERVOS ];
+//Target position. The user write here, the driver will do it's best to reach it
+S8 servo_target_pos[ N_SERVOS ];
+//The servo will rotate at this speed [unit/second]
+U8 servo_target_speed[ N_SERVOS ];
 //servo position offset for true 0 position
 //offsets are accounted for in separately from the position, it does not eat into the dynamic
-S8 servo_off[ N_SERVOS ] =
-{
-	+2,
-	+10,
-	-3,
-	-5,
-	+0,
-	+10
-};
-//Servo motion planner time base (1 = 20.07mS)
-U8 servo_global_time;
-//positions for the interpolator (-127,+127) -128=servo idle
-S8 servo_pos[ 2 * N_SERVOS ];
-//first column is starting time, second column is ending time
-U8 servo_time[ 2 * N_SERVOS ];
-//Second layer of vars, store future motion planned
-S8 servo_next_pos[N_SERVOS];
-U8 servo_next_time[N_SERVOS];
+S8 servo_off[ N_SERVOS ];
 
 	//-----------------------------------------------------------------------
 	//	TRAJECTORY VARS
 	//-----------------------------------------------------------------------
 
-//current trajectory
-U8 trajectory;
-//optional trajectory parameter (ex: walking speed)
-U8 trajectory_param;
-//trajectory the user want the robot to follow
-U8 wished_trajectory;
-U8 wished_trajectory_param;
+//Timebase for trajectory generation. 1 time unit = 1/50Hz.
+U16 servo_global_time 	= 0;
+//Current motion plan
+Trajectories trajectory = MOVE_IDLE;
+
+
 
 /****************************************************************************
 **	MAIN
@@ -255,46 +245,36 @@ int main( void )
 	///	they are not visible from other function, the c compiler can better optimize them
 	///**********************************************************************
 
-	//temp var
-	U8 u8t, u8t1;
+	//temp vars
+	U8 u8t;
+	U16 u16t;
+	S8 s8t;
 
-		///servos vars
-	//timer 1 OCR calculation
-	U16 delay;
+	U8 pre_traj = 0;
 
-	//signal that a future value on the buffer has been used and needs to be refreshed
-	U8 servo_next_idle;
+	U8 status_traj = 0;
 
 	///**********************************************************************
-	///	 INITIALISATION
+	///	VARIABILES INITIALISATION
 	///**********************************************************************
+	
+	//Correct mechanical offsets of the servos
+	servo_off[ SERVO_FDX ] 		= -3;
+	servo_off[ SERVO_FSX ] 		= +2;
+	servo_off[ SERVO_RDX ] 		= -3;
+	servo_off[ SERVO_RSX ] 		= +2;
+	servo_off[ SERVO_FHIP ] 	= +0;
+	servo_off[ SERVO_RHIP ] 	= +12;
+	servo_off[ SERVO_TORSO ] 	= +0;
 
-	//
-	f.safe 				= 0;
-	//
-	servo_idle 			= 0x00;
-	servo_next_idle		= 0x00;
-	//Initialize status var to disabled
-	servo_cnt 			= N_SERVOS;
 	//Clear global servo time
-	servo_global_time 	= 0;
 	//Initialize servo position to zero (offset is accounted for during calculations, i must not add it here)
 	for (u8t = 0;u8t < N_SERVOS;u8t++)
 	{
-		//Initialize start and end positions
-		SERVO_POS( 0, u8t ) 	= 0;
-		SERVO_POS( 1, u8t ) 	= 0;
-		//Initialize start and end times (REMEMBER to set them, DT = 0 when DX != 0  is an error when ISR scan)
-		SERVO_TIME( 0, u8t ) 	= 0;
-		SERVO_TIME( 1, u8t ) 	= 0;
-		//initialize next frame buffer
-		servo_next_pos[ u8t ] 	= 0;
-		servo_next_time[ u8t ] 	= 0;
-
+		servo_delay[u8t] 		= K0;	//Servo true position
+		servo_target_pos[u8t] 	= +0;	//Servo targt position (user)
+		servo_target_speed[u8t]	= 80;	//Servo target speed (default)
 	}
-
-	//servo_next_pos[ 2 ] 	= +30;
-	//servo_next_time[ 2 ] 	= 128;
 
 	///**********************************************************************
 	///	PHERIPERALS INITIALISATION
@@ -302,18 +282,9 @@ int main( void )
 
 	//Initialize devices
 	global_init();
-	//Give time for the display to go offline (from previous down)
-	_delay_ms( 200.0 );
-	//Get the LCD display on line
-	LCD_ON();
-	//Give time for the display to load
-	_delay_ms( 200.0 );
-	//Initialize display
-	display_initialisation();
-	//Wait for good measure, i'm in no rush
-	_delay_ms( 200.0 );
 	//The proud name of this unit
-	print_str( 0, 0, (U8 *)"Unit Zero Zero");
+	lcd_print_str( LCD_POS(0,0), (U8 *)"Unit Zero");
+	lcd_print_str( LCD_POS(1,0), (U8 *)"Time:");
 
 	///**********************************************************************
 	///	MAIN LOOP
@@ -321,122 +292,143 @@ int main( void )
 
 	for EVER
 	{
-		if (f.x == 1)
-		{
-			f.x = 0;
-		}
-
 		//-----------------------------------------------------------------------
 		//	LCD DIPSPLAY UPDATE
 		//-----------------------------------------------------------------------
-		//	This routine update the display
+		//	call the lcd display driver
 
-		//Issued every 156.8uS
-		if (f.lcd == 1)
+		//If: update the LCD display (10KHz)
+		if (f.lcd_update == 1)
 		{
-			f.lcd = 0;
-			//activity: ON
-			CLEAR_BIT( PORTC, 0 );
+			f.lcd_update = 0;
 			//Update display
-			display_update();
-			//activity: OFF
-			SET_BIT( PORTC, 0 );
+			lcd_update();
 		}
 
 		//-----------------------------------------------------------------------
 		//	START MOTOR SCAN (5.8uS max all servo functions)
 		//-----------------------------------------------------------------------
-		//	Flag rised by [Timer 0] (20mS)
+		//	Flag rised by [Timer 0]
 		//	>activity pin (led signal uC use, oscilloscope allow to measure function times)
 		//	>clear servo status var
 		//	>calculate first delay, pull down first line
 		//	>setup first delay, enable [Timer 1]
 		//	>Timer 1 ISR will handle the update of the servos and disable it self when done
 
-		//Issued every 20.07mS
-		if (f.mot == 1)
+		//If: Start Servo Scan (50Hz)
+		if (f.servo_scan == 1)
 		{
 			//clear flag
-			f.mot 			= 0;
-			//activity: ON
-			CLEAR_BIT( PORTC, 0 );
+			f.servo_scan = 0;
+				//Startup the servo scan
 			//clear status var
-			servo_cnt 		= 0;
-			u8t 			= 0;
-			//force safe flag to 0, it is unsafe now to update the servo vars
-			f.safe 			= 0;
+			servo_cnt 	= 0;
 			//calculate delay
-			delay 			= servo_calc_delay( 0 );
+			u16t		= servo_calc_delay( 0 );
 			//Store delay on T1
-			OCR1A 			= delay;
+			OCR1A 		= u16t;
 			//start T1
 			START_TIMER1();
 			//pull up first line
-			SET_BIT( PORTB, 0 );
-			//activity: OFF
-			SET_BIT( PORTC, 0 );
-		}	//End If: motor scan flag
+			SET_BIT( SERVO_PORT, 0 +SERVO_PIN_OFFSET );
+				//Advance global time by one tick
+			servo_global_time++;
+			lcd_print_u16( LCD_POS(1,6), servo_global_time );
 
-		//-----------------------------------------------------------------------
-		//	MOTION BUFFER
-		//-----------------------------------------------------------------------
-		//	The interpolator fully executed a movement
-		//	I load one set of futures values from the buffer and signal that new values have to be generated
-		//	i use a mobile mask scan to handle the update
-
-		//If: it's safe to write into the global servo vars AND at least one servo require instructions
-		if ((f.safe == 1) && (servo_idle != 0x00))
-		{
-			//move the global var to a local one for speed
-			u8t 				= servo_idle;
-			//The trajector
-			servo_next_idle 	= u8t;
-			//For: all servos
-			for (u8t1 = 0; u8t1 < N_SERVOS;u8t1++)
+			pre_traj = AT_TOP_INC( pre_traj, 25 );
+			if (pre_traj == 0)
 			{
-				//If: if the servo end frame need to be updated
-				if (IS_BIT_ONE( u8t, u8t1 ))
-				{
-					//fill the end position with the new one
-					SERVO_POS( 1, u8t1 )	= servo_next_pos[ u8t1 ];
-					SERVO_TIME( 1, u8t1 )	= servo_next_time[ u8t1 ];
-				}
+				f.servo_traj = 1;
 			}
-			//I'm done
-			servo_idle 		= 0x00;
-		}
+		}	//End If: motor scan flag
 
 		//-----------------------------------------------------------------------
 		//	TRAJECTORY GENERATION
 		//-----------------------------------------------------------------------
 
-		//If: some elements from the buffer have been used
-		if (servo_next_idle != 0x00)
+		if (f.servo_traj == 1)
 		{
-			u8t = servo_next_idle;
-			//For: all servos
-			for (u8t1 = 0; u8t1 < N_SERVOS;u8t1++)
+			f.servo_traj = 0;
+			s8t = 50;
+			//Upright
+			if (status_traj == 0)
 			{
-				//If the servo need a new buffer
-				if (IS_BIT_ONE( u8t, u8t1 ))
+				//Initialize servo position to zero (offset is accounted for during calculations, i must not add it here)
+				for (u8t = 0;u8t < N_SERVOS;u8t++)
 				{
-					//request a new trajectory point
-					if (servo_next_pos[u8t1]== 0)
-					{
-						servo_next_pos[u8t1]= 20;
+					servo_target_pos[u8t] 	= 0;	//Servo targt position (user)	
+				}	
+			}
+			//Hip
+			else if (status_traj == 1)
+			{
+				servo_target_pos[ SERVO_FDX ]	= +0;
+				servo_target_pos[ SERVO_FSX ]	= +0;
+				servo_target_pos[ SERVO_RDX ]	= +0;
+				servo_target_pos[ SERVO_RSX ]	= +0;
+				servo_target_pos[ SERVO_FHIP ]	= +0;
+				servo_target_pos[ SERVO_RHIP ]	= +0;
+			}
+			//Leg
+			else if (status_traj == 2)
+			{
+				servo_target_pos[ SERVO_FDX ]	= +s8t;
+				servo_target_pos[ SERVO_FSX ]	= +s8t;
+				servo_target_pos[ SERVO_RDX ]	= +s8t;
+				servo_target_pos[ SERVO_RSX ]	= +s8t;
+				servo_target_pos[ SERVO_FHIP ]	= +0;
+				servo_target_pos[ SERVO_RHIP ]	= +0;
+			}
+			//Reverse Hip
+			else if (status_traj == 3)
+			{
+				servo_target_pos[ SERVO_FDX ]	= +0;
+				servo_target_pos[ SERVO_FSX ]	= +0;
+				servo_target_pos[ SERVO_RDX ]	= +0;
+				servo_target_pos[ SERVO_RSX ]	= +0;
+				servo_target_pos[ SERVO_FHIP ]	= +0;
+				servo_target_pos[ SERVO_RHIP ]	= +0;
+			}
+			//reset leg
+			else if (status_traj == 4)
+			{
+				servo_target_pos[ SERVO_FDX ]	= -s8t;
+				servo_target_pos[ SERVO_FSX ]	= -s8t;
+				servo_target_pos[ SERVO_RDX ]	= -s8t;
+				servo_target_pos[ SERVO_RSX ]	= -s8t;
+				servo_target_pos[ SERVO_FHIP ]	= +0;
+				servo_target_pos[ SERVO_RHIP ]	= +0;
+				status_traj = 0;
+			}
+			//
+			else 
+			{
+				status_traj = 255;
+			}
+			status_traj++;
 
-					}
-					else
-					{
-						servo_next_pos[u8t1]= 0;
-					}
 
-					servo_next_time[ u8t1 ] = 50;
+			/*
+			//fetch global time
+			u16t = servo_global_time;
+			if ((u16t & 0x00ff) == 0x0000)
+			{
+				//Initialize servo position to zero (offset is accounted for during calculations, i must not add it here)
+				for (u8t = 0;u8t < N_SERVOS;u8t++)
+				{
+					servo_target_pos[u8t] 	= +20;	//Servo targt position (user)	
 				}
 			}
+			else if ((u16t & 0x00ff) == 0x0080)
+			{
+				//Initialize servo position to zero (offset is accounted for during calculations, i must not add it here)
+				for (u8t = 0;u8t < N_SERVOS;u8t++)
+				{
+					servo_target_pos[u8t] 	= -20;	//Servo targt position (user)	
+				}
+			}
+			*/
 		}
-
-
 	}	//end for: for EVER
 
 	return 0;
@@ -449,312 +441,93 @@ int main( void )
 /****************************************************************************
 **	SERVO CALC POS
 *****************************************************************************
-**	The operation i must do is:
-**	Position = Start + increment of position * fraction of time passed
-**	X(t) = Xs + DX*(t/DT)
-**	DX would require 9 bit, i unpack it
-**	t/DT is <1 by definition, i multiply by 2^N and divide rounding later
-**	There is little reason to round an S8 that i have to expand to a 16b delay anyway
-**	D = K0 + K1 * Xoff + K1 * Xs * (2^8 - t*2^8/DT) +  + K1 * Xe * (t*2^8/DT)
-**	i calculate t*2^8/DT stand alone
-*****************************************************************************
-**	DELTAT ordering
-**	>>tested the DeltaT algorithm, much more to it than it first seems, it must understand where the temporal marker is gonna be
-*****************************************************************************
-**	T recalculation
-**	t must be 0 < t < DeltaT to do the calculations
+**	This function will calculate the delay that move servo[index] closer to the target position
+**		SLEW RATE LIMITER: The function will only move at the speed set by the user
+**		OFFSET CORRECTION:	In this function i account for mechanical misalignement
+**	Formula:
+**	xpos = xtarget if ABS(xtarget -xpos) < xspeed/50
+**	delay[OCR] = K0 + K1*xoff + K1*xpos
 ****************************************************************************/
 
 U16 servo_calc_delay( U8 index )
 {
-	//***********************************************************************
-	//	STATIC VARIABILE
-	//***********************************************************************
+	///--------------------------------------------------------------------------
+	///	STATIC VARIABILE
+	///--------------------------------------------------------------------------
 
-	//***********************************************************************
-	//	LOCAL VARIABILE
-	//***********************************************************************
+	///--------------------------------------------------------------------------
+	///	LOCAL VARIABILE
+	///--------------------------------------------------------------------------
 
-	//global time
-	U8 gt;
-	//Positions
-	S8 x[2];
-	//Times
-	U8 t[2];
-	//Delay
-	U16 d;
-	//temp var
-	U8 u8t;
+	U16 delay;
 
-	U16 u16t;
+	S16 slew_rate;
 
 	S16 s16t;
-	//	local flow control flags
-	//	0	: enable temporal interpolation, it's meant to skip calculation during start, end and constant position
-	//	1	: select between x[0] and x[1], it's meant to handle swaps, start and ending
-	//	2	: copy ending in starting once ending is computed, it's meant to stop when ending position is reached and setup for next motion
-	//	3	: idle detection, it's meant to detect when the interpolator is done
-	U8 flags;
 
-	//***********************************************************************
-	//	INITIALIZATIONS
-	//***********************************************************************
-	//	>initialize vars
-	//	>fetch global vars
-	//	>Order vars with Te > Ts
-	//	>Handle special cases
-	//		>X fixed, no interpolation needed (happen when Xs == Xe or when gt == Ts or gt == Te)
-	//		>ERROR (happen when Ts == Te but Xs != Xe, i have 2 points in the same temporal slot)
 
-	//clear flags
-	flags 	= 0x00;
-	//global time
-	gt 		= servo_global_time;
-	//get servo reference time
-	t[0] 	= SERVO_TIME( 0, index );
-	t[1]	= SERVO_TIME( 1, index );
-	//I put them if plus order to halve possible cases (i have to swap positions as well for this to work)
-	//If: Tstart > Tend
-	if (t[0] > t[1])
+	U16 ret;
+
+	///--------------------------------------------------------------------------
+	///	CHECK AND INITIALIZATIONS
+	///--------------------------------------------------------------------------
+
+	///--------------------------------------------------------------------------
+	///	BODY
+	///--------------------------------------------------------------------------
+	//	>Calculate target delay
+	//	>Calculate maximum delay change target_delay-old delay (slew rate)
+	//		>based on user defined target_speed 
+	//		>limited by servo max slew rate (max rotation speed normalized to my units)
+	//	>calculate new delay (apply delay change)
+	//	>save delay on servo_delay
+	//	>return new delay
+		///Calculate target OCR of servo [index]
+	//Calculate position dependent coefficient
+	s16t 	= K1 *servo_off[ index ] +K1 *servo_target_pos[ index ];
+	//apply sign correction
+	if (IS_BIT_ONE( SERVO_DIR, index ))
 	{
-		//swap times
-		u8t = t[0];
-		t[0] = t[1];
-		t[1] = u8t;
-		//Signal that the positions needs to be swapped
-		SET_BIT( flags, 1 );
+		s16t = -s16t;
 	}
-	//fetch servo vars, i handle swaps with a flag
-	x[0] 	= SERVO_POS( 0, index );
-	x[1] 	= SERVO_POS( 1, index );
-		///Handle special cases
-	//handle DELTAX == 0
-	if (x[0] == x[1])
+	delay	= K0 + s16t;
+		///Speed Limiter
+	//calculate maximum allowed motion. I need to convert from [unit/second] -> [unit/20mS]
+	slew_rate = K1*servo_target_speed[ index ] /50;
+	//If: The user wants to exceed the servo limits
+	if (slew_rate > SERVO_MAX_SLEW_RATE)
 	{
-		//If starting and end position are the same:
-		//I have no interpolation to do irregarding to all others time vars
-		//I use x[0]
-		//TOGGLE_BIT( flags, 1);
-		//If: DT == 0 it means that the interpolator is idle
-		if (t[0] == t[1])
-		{
-			//this servo is idle
-			SET_BIT( flags, 3 );
-		}
+		//Clip the Slew rate
+		slew_rate = SERVO_MAX_SLEW_RATE;
 	}
-	//handle DELTAT == 0
-	else if (t[0] == t[1])
+	//calculate slew rate required to meet user input
+	s16t = delay - servo_delay[ index ];
+	if (s16t > +slew_rate)
 	{
-		//here mean that DX is NOT zero, but DT is, it's an ERROR
-		//as recovery i set the two position to the same value
-		SET_BIT( flags, 2 );
-		//this servo is idle
-		SET_BIT( flags, 3 );
+		//I'm NOT locked: the servo is moving at max speed
+		CLEAR_BIT( servo_lock, index );
+		ret = servo_delay[ index ] +slew_rate;
 	}
-	//exactly on start
-	else if (t[0] == gt)
+	else if (s16t < -slew_rate)
 	{
-		//I use x[0]
-		//SET_BIT( flags, 1);
+		//I'm NOT locked: the servo is moving at max speed
+		CLEAR_BIT( servo_lock, index );
+		ret = servo_delay[ index ] -slew_rate;
 	}
-	//exactly on end
-	else if (t[1] == gt)
-	{
-		//I use ending x as position (no interpolation needed)
-		TOGGLE_BIT( flags, 1);
-		//I ended the interpolation, i will write ending time and position in the starting one
-		SET_BIT( flags, 2 );
-		//this servo is idle
-		SET_BIT( flags, 3 );
-	}
-	//i'm done with special cases, all others are time dependent
 	else
 	{
-		//Enable temporal calculations
-		SET_BIT( flags, 0);
+		//I'm locked: The motor is not moving at max speed
+		SET_BIT( servo_lock, index );
+		ret = delay;
 	}
+	//Write back result and return the delay
+	servo_delay[ index ] = ret;
 
-	//***********************************************************************
-	//	BODY
-	//***********************************************************************
-	//	>Temporal Interpolation enabled?
-	//		Y
-	//		>Calculate DeltaT and t
-	//			>DeltaT (temporal width of the interpolation)
-	//			>t	(time elapsed since start of interpolation)
-	//		>Calculate Kt = 256*t/DT
-	//		>Calculate time dependent delay K1*Xs*(256-KT)/256 + K1*Xe*KT/256
-	//		N
-	//		>Calculate time dependent delay K1*X
-	//	>Calculate delay
-	//		>D = K0 + K1*Xoff+D(t,x)
+	///--------------------------------------------------------------------------
+	///	RETURN
+	///--------------------------------------------------------------------------	
 
-	//If: temporal calculations are enabled
-	if (IS_BIT_ONE( flags, 0 ))
-	{
-		//-----------------------------------------------------------------------
-		//	DeltaT and t calculation
-		//-----------------------------------------------------------------------
-		//	[Ts t Te]	gt is inside servo time
-		//		>t = gt -Ts
-		//		>DT = Te -Ts
-		//	[t Ts Te]	gt is before servo time
-		//		>t = 2^8 -Te +t
-		//		>DT = 2^8 -Te +Ts
-		//	[Ts Te t]	gt is after servo time
-		//		>t = gt -Te
-		//		>DT = 2^8 -Te +Ts
-
-		//if: global time is inside servo time [Ts t Te]
-		if ((gt > t[0]) && (gt < t[1]))
-		{
-			//t = t - Ts
-			gt = gt - t[0];
-			//DeltaT = Te - Ts
-			t[0] = t[1] - t[0];
-
-		}
-		//if: global time is before servo time [t Ts Te]
-		else if (gt < t[0])
-		{
-			//t = 2^8 - Te + t (i unpack 2^8 into 255+1)
-			gt = 255 - t[1] + 1 + gt;
-			//DeltaT = 2^8 - Te + Ts
-			t[0] = 255 - t[1] +1 + t[0];
-			//I need to swap the positions
-			TOGGLE_BIT( flags, 1 );
-		}
-		//if: global time is after servo time [Ts Te t]
-		else
-		{
-			//t = t - Te
-			gt = gt - t[1];
-			//DeltaT = 2^8 - Te + Ts
-			t[0] = 255 - t[1] +1 + t[0];
-			//I need to swap the positions
-			TOGGLE_BIT( flags, 1 );
-		}
-
-		//-----------------------------------------------------------------------
-		//	CALCULATE KT
-		//-----------------------------------------------------------------------
-		//	KT is the operation t/DT, it is the fraction of DT elapsed
-		//	it is bounded [0,1] i multiply by 256 to keep it within an U8
-		//	this var is used by the interpolator
-		//	i round the result toward even to increase resolution
-
-		//calculate NUM
-		u16t = (U16)256 * gt;
-		//divide and obtain unrounded result
-		u8t = (U8)0 + u16t/t[0];
-		//i have to do: 2*num -2*res*gt, if this quantity is bigger than gt -> i round up, if the quantity is equal and the result is odd -> i round up
-		u16t = 2*(u16t-u8t*t[0]);
-		//if the 2*residual is bigger then divisor (DT)
-		if (u16t > t[0])
-		{
-			//round up
-			u8t++;
-		}
-		//if the 2*residual is equal to the divisor (DT) AND the unrounded result is ODD
-		else if ((u16t == t[0]) && (u8t & 0x01))
-		{
-			//round up (round toward even ex: 217.5 -> 218, 216.5 -> 216)
-			u8t++;
-		}
-		//if the 2*residual is lower than the divisor
-		else
-		{
-			//round down (do nothing, the bits are masked out)
-		}
-		//t[1] now is KT
-		t[1] = u8t;
-
-		//-----------------------------------------------------------------------
-		//	CALCULATE POSITION DEPENDENT DELAY
-		//-----------------------------------------------------------------------
-		//	Calculate the part of the delay that is function of Xs, Xe, Ts, Te, gt
-		//	the operation to do is:
-		//	Dx = K1 * [ Xs * (256 - KT) / 256 + Xe * (KT) / 256 ]
-		//	vars:
-		//	Xs: x[0], Xe: x[0], DT: t[0], KT: t[1]
-
-		//if: i need to swap positions
-		if (IS_BIT_ONE( flags, 1))
-		{
-			//i am better off complementing kt, i get the same result without an additional S8 temp var
-			t[1] = 255 - t[1] +1;
-		}
-		//u16t = 127 * K1;
-
-		//calc Xs * (2^8 - Kt) + Xe * (Kt)
-		s16t = x[0] * (255 - t[1] +1) + x[1] * t[1];
-		//divide by 2^8 and round the result, corrected for negative numerators
-		s16t = AT_DIVIDE_NEG_RTO( s16t, 8 );
-		//multiply by K1
-	}	//End If: temporal calculations are enabled
-	//If: i already know the position to be used and do not need interpolation
-	else
-	{
-		//-----------------------------------------------------------------------
-		//	CALCULATE POSITION DEPENDENT DELAY
-		//-----------------------------------------------------------------------
-
-		//If: i use x[1]
-		if (IS_BIT_ONE( flags, 1))
-		{
-			s16t = x[1];
-		}
-		//If: i use x[0]
-		else
-		{
-			s16t = x[0];
-		}
-	}	//End If: i already know the position to be used and do not need interpolation
-
-	//now i only need to multiply by the OCR scaling constant K1
-	s16t = s16t * K1;
-
-	//-----------------------------------------------------------------------
-	//	CALCULATE POSITION INDEPENDENT DELAY
-	//-----------------------------------------------------------------------
-
-	//K0 is the neutral delay, the offset is meant to compensate for mechanical misalignement
-	d = K0 + K1 * SERVO_OFFSET( index ) + s16t;
-
-	//-----------------------------------------------------------------------
-	//	CALCULATE POSITION INDEPENDENT DELAY
-	//-----------------------------------------------------------------------
-
-	//If: end frame was executed
-	if (IS_BIT_ONE( flags, 2 ))
-	{
-		//I copy the ending position in the servo global vars
-		//If: ending position was x[1]
-		if (IS_BIT_ONE( flags, 1 ))
-		{
-			SERVO_POS( 0, index ) = x[1];
-			SERVO_TIME( 0, index ) = SERVO_TIME( 1, index );
-		}
-		//If: ending position was x[0], i end up here if Ts was bigger than Te
-		else
-		{
-			//should not happen during normal operation, but in case of creative use of the interpolator i handle this special case
-			SERVO_POS( 1, index ) = x[0];
-			SERVO_TIME( 1, index ) = SERVO_TIME( 0, index );
-		}
-	}
-
-	//If: the servo is idle after this operation
-	if (IS_BIT_ONE( flags, 3 ))
-	{
-		//signal that the servo is now idle
-		SET_BIT( servo_idle, index );
-	}
-
-	//***********************************************************************
-	//	RETURN
-	//***********************************************************************
-
-	return d;
+	return ret;
 }	//end function: servo_calc_delay
+
 

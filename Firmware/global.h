@@ -30,34 +30,44 @@
 	//LCD device functions and init
 	#include "at_lcd.h"
 	//trigonometric functions
-	#include "at_trig8.h"
+	//#include "at_trig8.h"
 
 	/****************************************************************************
 	**	DEFINE
 	****************************************************************************/
 
-		//-----------------------------------------------------------------------
-		//	SERVO CONSTANTS
-		//-----------------------------------------------------------------------
-	
-	//maximum number of servos
-	//#define MAX_SERVOS	8
+		///----------------------------------------------------------------------
+		///	LCD
+		///----------------------------------------------------------------------
+
+	//millisecond hard delay for turn of and turn on of the LCD display
+	#define LCD_INIT_DELAY		250.0
+
+		///----------------------------------------------------------------------
+		///	SERVOS
+		///----------------------------------------------------------------------
+ 
+ 	//Prscaler that generate servo_scan (50Hz) from lcd_update (10080.6Hz)
+	//	PRE_SERVO_TOP = ROUND(10080.6/50)
+	#define PRE_SERVO_TOP 		(202-1)
 	//
 	#define SERVO_PLANNER_PRE	2
 	//Total number of servos
-	#define N_SERVOS			6
+	#define N_SERVOS			7
 	//Special code to disable a servo
 	#define SERVO_OFF			-128
-	//Servo maximum angular velocity [Units/Ticks], at 5V i have 190mS per 60°, 180° are 256 Units, 1 tick is 20mS. Every Tick i can move ~ Units
-	#define SERVO_MAX_SPEED		9
-	//For math reason i need the inverse multiplied by the scale of Kalfa, which is 252/9. It means that with Kalfa = 252 i use 100% of the maximum alngulare velocity during the walk
-	#define SERVO_MAX_FREQ		28
 	//Neutral OCR
 	#define	K0					30000
 	//Linear OCR (40°-400uS-63) (90°-900uS-141.7)
 	#define K1					142
-	//Half of minimum call time
-	//#define OCR_MIN_2	150
+	//Port where the servos are placed
+	#define SERVO_PORT			PORTB
+	//offset at which servo pins starts
+	#define SERVO_PIN_OFFSET	0
+	//Servo maximum angular velocity [Angular Units/Ticks], at 5V i have 190mS per 60°, 180° are 256 Units, 1 tick is 20mS. Every Tick i can move ~ Units
+	#define SERVO_MAX_SPEED		4
+	//Convert to OCR K1*
+	#define SERVO_MAX_SLEW_RATE	631
 
 		//-----------------------------------------------------------------------
 		//	MOTOR ALIASES
@@ -66,12 +76,14 @@
 	//enum servos names (positions and functions in the robot)
 	enum
 	{
-		SERVO_FSX		= 0,	//Hip Front SX 			(+ => Leg rear -> front)
-		SERVO_FDX		= 1,	//Hip Front DX 			(+ => Leg front -> Rear)
-		SERVO_RSX		= 3,	//Hip Rear SX			(+ => Leg rear -> front)
-		SERVO_RDX		= 2,	//Hip Rear DX			(+ => Leg front -> Rear)
-		SERVO_FC		= 4,	//Hip Front Rotation	(+ => rise leg dx, lower leg sx)
-		SERVO_RC		= 5		//Hip Rear Rotation		(+ => lower leg dx, rise leg sx)
+		SERVO_FDX		= 0,	//Leg Front DX 			(+ => Leg front -> Rear)
+		SERVO_FSX		= 1,	//Leg Front SX 			(+ => Leg rear -> front)
+		SERVO_RDX		= 2,	//Leg Rear DX			(+ => Leg front -> Rear)
+		SERVO_RSX		= 3,	//Leg Rear SX			(+ => Leg rear -> front)
+		SERVO_FHIP		= 4,	//Hip Front Hip			(+ => rise leg dx, lower leg sx)
+		SERVO_RHIP		= 5,	//Hip Rear Hip			(+ => lower leg dx, rise leg sx)
+		SERVO_TORSO		= 6,	//Torso joint (Z)
+		SERVO_NECK		= 7		//Neck joint
 	};
 
 		//-----------------------------------------------------------------------
@@ -80,7 +92,7 @@
 
 	//servo direction correction mask, allow for the logical direction of a joint to be reversed in sign
 	//each bit is associated with a servo, if the bit is '1', the direction is reversed
-	#define SERVO_DIR	(MASK(1) | MASK(2) | MASK(5))
+	#define SERVO_DIR	( MASK(SERVO_FSX) | MASK(SERVO_RDX) | MASK(SERVO_FHIP) | MASK(SERVO_RHIP) | MASK(SERVO_TORSO))
 
 		//-----------------------------------------------------------------------
 		//	PHYSICAL CONSTANTS OF THE ROBOT
@@ -98,6 +110,16 @@
 	#define SIZE_HY				50
 	//Distance from Hip to base of the Boot in Z, length of a Leg
 	#define SIZE_LZ				130
+
+		//-----------------------------------------------------------------------
+		//	TRAJECTORIES
+		//-----------------------------------------------------------------------
+
+	enum _Trajectories
+	{
+		MOVE_IDLE,
+		MOVE_FW_SLOW
+	};
 
 	/****************************************************************************
 	**	MACRO
@@ -151,6 +173,8 @@
 	//Global flags raised by ISR functions
 	typedef struct _Isr_flags Isr_flags;
 
+	typedef enum _Trajectories Trajectories;
+
 	/****************************************************************************
 	**	STRUCTURE
 	****************************************************************************/
@@ -159,12 +183,10 @@
 	struct _Isr_flags
 	{
 		//First byte
-		U8 mot			: 1;	//start the motor scan
-		U8 pos			: 1;	//motor pos update
-		U8 lcd			: 1;	//lcd update flag
-		U8 x			: 1;	//test flag
-		U8 safe			: 1;	//it is safe to write in the global servo vars
-		U8 				: 3;	//unused bits
+		U8 lcd_update	: 1;	//lcd update flag
+		U8 servo_scan	: 1;	//start the motor scan
+		U8 servo_traj	: 1;	//
+		U8 				: 5;	//unused bits
 	};
 
 	/****************************************************************************
@@ -204,28 +226,28 @@
 	//Those are the flags updated by ISRs
 	extern volatile Isr_flags f;	
 	//Status variabile for the servos, keep track of which servo to do next
-	volatile extern U8 servo_cnt;
+	extern volatile  U8 servo_cnt;
 	//each servo has 1 bit, it's rised when the interpolator is done
 	extern volatile U8 servo_idle;
 
-		//-----------------------------------------------------------------------
-		//	SERVO VARS
-		//-----------------------------------------------------------------------
+		///----------------------------------------------------------------------
+		///	SERVO
+		///----------------------------------------------------------------------
 
 	//servo direction correction mask, allow for the logical direction of a joint to be reversed in sign
 	//each bit is associated with a servo, if the bit is '1', the direction is reversed
 	extern U8 servo_dir;
-	//Servo offset for true 0 position
-	extern S8 servo_off[ N_SERVOS ];
-	//Servo motion planner time base (1 = 79.87mS)
-	extern U8 servo_global_time;
-	//positions for the interpolator (-127,+127) -128=servo idle
-	extern S8 servo_pos[ 2 * N_SERVOS ];
-	//first column is starting time, second column is ending time
-	extern U8 servo_time[ 2 * N_SERVOS ];
-	//Second layer of vars, store next motion planned
-	extern S8 servo_next_pos[N_SERVOS];
-	extern U8 servo_next_time[N_SERVOS];
+	//One flag per servo '1' if the servo is keeping up with target_pos
+	extern U8 servo_lock;
+	//servo position offset for true 0 position
+	//offsets are accounted for in separately from the position, it does not eat into the dynamic
+	extern S8 servo_off[ N_SERVOS ]; 
+	//Current position of the servos. Used by the driver, user should not write here
+	extern U16 servo_delay[ N_SERVOS ];
+	//Target position. The user write here, the driver will do it's best to reach it
+	extern S8 servo_target_pos[ N_SERVOS ];
+	//The servo will rotate at this speed [unit/second]
+	extern U8 servo_target_speed[ N_SERVOS ];
 
 
 #else

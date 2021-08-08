@@ -52,22 +52,22 @@
 	//and the PORT register, first instruction configure the Hi-Low information or the Pull-up information
 	//the second instruction configure the output/input information
 	#define PORT_CONFIG( DDRx, PORTx, A0, A1, A2, A3, A4, A5, A6, A7) \
-			PORTx =	SHIFT( COND_R_H( A0 ), 0 ) | \
-					SHIFT( COND_R_H( A1 ), 1 ) | \
-					SHIFT( COND_R_H( A2 ), 2 ) | \
-					SHIFT( COND_R_H( A3 ), 3 ) | \
-					SHIFT( COND_R_H( A4 ), 4 ) | \
-					SHIFT( COND_R_H( A5 ), 5 ) | \
-					SHIFT( COND_R_H( A6 ), 6 ) | \
-					SHIFT( COND_R_H( A7 ), 7 ); \
-			DDRx =	SHIFT( COND_L_H( A0 ), 0 ) | \
-					SHIFT( COND_L_H( A1 ), 1 ) | \
-					SHIFT( COND_L_H( A2 ), 2 ) | \
-					SHIFT( COND_L_H( A3 ), 3 ) | \
-					SHIFT( COND_L_H( A4 ), 4 ) | \
-					SHIFT( COND_L_H( A5 ), 5 ) | \
-					SHIFT( COND_L_H( A6 ), 6 ) | \
-					SHIFT( COND_L_H( A7 ), 7 )
+			PORTx =	SHIFTL( COND_R_H( A0 ), 0 ) | \
+					SHIFTL( COND_R_H( A1 ), 1 ) | \
+					SHIFTL( COND_R_H( A2 ), 2 ) | \
+					SHIFTL( COND_R_H( A3 ), 3 ) | \
+					SHIFTL( COND_R_H( A4 ), 4 ) | \
+					SHIFTL( COND_R_H( A5 ), 5 ) | \
+					SHIFTL( COND_R_H( A6 ), 6 ) | \
+					SHIFTL( COND_R_H( A7 ), 7 ); \
+			DDRx =	SHIFTL( COND_L_H( A0 ), 0 ) | \
+					SHIFTL( COND_L_H( A1 ), 1 ) | \
+					SHIFTL( COND_L_H( A2 ), 2 ) | \
+					SHIFTL( COND_L_H( A3 ), 3 ) | \
+					SHIFTL( COND_L_H( A4 ), 4 ) | \
+					SHIFTL( COND_L_H( A5 ), 5 ) | \
+					SHIFTL( COND_L_H( A6 ), 6 ) | \
+					SHIFTL( COND_L_H( A7 ), 7 )
 
 	//those macros configure the single port
 	#ifdef PORTA
@@ -106,7 +106,7 @@
 
 	//return true if the uart 0 is ready to transmit data
 	#define UART0_TX_READY()	\
-		(UCSR0A & MASK(UDRE0))
+		((UCSR0A & MASK(UDRE0)) == MASK(UDRE0))
 
 #else
 	#warning "multiple inclusion of the header file at_mega_port.h"

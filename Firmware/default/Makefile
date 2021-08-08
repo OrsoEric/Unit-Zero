@@ -15,7 +15,7 @@ COMMON = -mmcu=$(MCU)
 
 ## Compile options common for all C compilation units.
 CFLAGS = $(COMMON)
-CFLAGS += -Wall -gdwarf-2 -std=gnu99 -DF_CPU=20000000UL -Os -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
+CFLAGS += -Wall -gdwarf-2 -std=gnu99         -DF_CPU=20000000UL -Os -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
 CFLAGS += -MD -MP -MT $(*F).o -MF dep/$(@F).d 
 
 ## Assembly specific flags
@@ -37,7 +37,7 @@ HEX_EEPROM_FLAGS += --change-section-lma .eeprom=0 --no-change-warnings
 
 
 ## Objects that must be built in order to link
-OBJECTS = initialisation.o interrupt.o main.o At_trig8.o at_lcd.o 
+OBJECTS = at_lcd.o at_string.o initialisation.o interrupt.o main.o 
 
 ## Objects explicitly added by the user
 LINKONLYOBJECTS = 
@@ -46,6 +46,12 @@ LINKONLYOBJECTS =
 all: $(TARGET) UnitZeroZero.hex UnitZeroZero.eep UnitZeroZero.lss size
 
 ## Compile
+at_lcd.o: ../at_lcd.c
+	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
+
+at_string.o: ../at_string.c
+	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
+
 initialisation.o: ../initialisation.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
@@ -53,12 +59,6 @@ interrupt.o: ../interrupt.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
 main.o: ../main.c
-	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
-
-At_trig8.o: ../At_trig8.c
-	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
-
-at_lcd.o: ../at_lcd.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
 ##Link

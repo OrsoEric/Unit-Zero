@@ -8,7 +8,7 @@
 ** GLOBAL INITIALISATION
 ****************************************************************************/
 
-void global_init(void)
+void global_init( void )
 {
 	///**********************************************************************
 	///	PORT I/O SETTING:
@@ -44,9 +44,9 @@ void global_init(void)
 	//PB5			: Servo 5
 	//PB6			:
 	//PB7			:
-	PORT_B_CONFIG('L','L','L','L','L','L','R','R');
+	PORT_B_CONFIG('L','L','L','L','L','L','L','L');
 
-	//PC0			: Activity LED
+	//PC0			: LED#
 	//PC1			: LCD_PWR#
 	//PC2			: LCD_EN
 	//PC3			: LCD_RS
@@ -74,6 +74,20 @@ void global_init(void)
 	timer0_init();
 	//Precise delay for the servos
 	timer1_init();
+
+			///LCD Init
+	//Turn OFF Delay
+	//This is meant to allow LCD display to safely power down and reset
+	//If it's too short, the LCD will bug out when quickly doing ON -> OFF -> ON 
+	_delay_ms( LCD_INIT_DELAY );
+	//Power Up the LCD Display
+	CLEAR_BIT( PORTC, 1 );
+	//Turn ON Delay
+	//This is meant to give the LCD Display time to safely power Up
+	//Ifit's too short, The LCD will bug out when doing OFF -> ON -> COMMANDS
+	_delay_ms( LCD_INIT_DELAY );
+	//Initialise the display and the driver: Send the sequences that configure the display
+	lcd_init();
 
 	///**********************************************************************
 	///	ENABLE ALL INTERRUPT:
@@ -107,6 +121,7 @@ void global_init(void)
 **
 **	Fclk	N	OCR		T
 **	20e6	64	48		156.8uS
+**	20e6	8	249		100uS
 **
 ****************************************************************************/
 
@@ -177,7 +192,7 @@ void timer0_init( void )
 	///	1		|	1		|	0		|| T0 pin, falling edge
 	///	1		|	1		|	1		|| T0 pin, rising edge
 
-	SET_BIT( tccr0b_temp, CS00 );
+	//SET_BIT( tccr0b_temp, CS00 );
 	SET_BIT( tccr0b_temp, CS01 );
 	//SET_BIT( tccr0b_temp, CS02 );
 
@@ -201,7 +216,7 @@ void timer0_init( void )
 	TCCR0B = tccr0b_temp;
 	TIMSK0 = timsk0_temp;
 
-	OCR0A = 48;
+	OCR0A = 249;
 	OCR0B = 0;
 
 	return;

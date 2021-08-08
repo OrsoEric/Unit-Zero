@@ -56,6 +56,24 @@
 	** ENVROIMENT VARIABILE
 	****************************************************************************/
 
+	//If uncommented, it will define debug functions
+	//#define DEBUG_PRINTF
+	//debug to file
+	//#define DEBUG_FILE
+
+	/****************************************************************************
+	** GLOBAL VARIABILE
+	****************************************************************************/
+
+	//If txt logger is active
+	#ifdef DEBUG_FILE
+		#include <stdio.h>
+		//FILE structure
+		extern FILE *fdebug;
+		//es, at min_dlevel = 2. only level 2 and above will be executed
+		extern uint8_t dlevel, min_dlevel;
+	#endif
+
 	/****************************************************************************
 	** USEFUL DEFINE
 	****************************************************************************/
@@ -87,40 +105,19 @@
 	#define S8 int8_t
 	#define U16 uint16_t
 	#define S16 int16_t
+	#define U32 uint32_t
+	#define S32 int32_t
 
-	#define U8P uint8_t *
 
-	//uint8_t
-	#ifndef MAX_UINT8
-		#define MAX_UINT8		255
-	#endif
-
-	//int8_t
-	#ifndef MAX_INT8
-		#define MAX_INT8		127
-	#endif
-
-	#ifndef MIN_INT8
-		#define MIN_INT8		-128
-	#endif
-
-	//uint16_t
-	#ifndef MAX_UINT16
-		#define MAX_UINT16		65535
-	#endif
-
-	//int16_t
-	#ifndef MAX_INT16
-		#define MAX_INT16		32767
-	#endif
-
-	#ifndef MIN_INT16
-		#define MIN_INT16		-32768
-	#endif
-
+	#define MAX_U8			+255
+	#define MAX_U16			+65535
+	#define MIN_S8			-128
+	#define MAX_S8			+127
+	#define MIN_S16			-32768
+	#define MAX_S16			+32767
 
 	/****************************************************************************
-	** GENERAL PURPOSE MACRO
+	** GENERAL PURPOSE MACROS
 	****************************************************************************/
 
 	//do nothing for one clock cycle
@@ -133,10 +130,6 @@
 	//generate invrted mask '0' in position shiftvalue
 	#define INV_MASK( shift_value )	\
 		(~MASK(shift_value))
-
-	//shift a variable by shift value position
-	#define SHIFT( var, shift_value ) \
-		( (var) << (shift_value) )
 
 	//set a single bit inside a variable leaving the other bit untouched
 	#define SET_BIT( var, shift_value ) \
@@ -154,6 +147,19 @@
 	#define IS_BIT_ONE( var, shift_value )	\
 		( ( (var) & MASK( shift_value ) ) == MASK( shift_value ) )
 
+	//Extract H part of U16
+	#define U16H( data )	\
+		(U8)((U16)data >> 8)
+
+	//Extract L part of U16
+	#define U16L( data )	\
+		(U8)((U16)data & (U16)0x00ff)
+	//Extract the h part of a s16 data
+	#define S16H( x )	\
+		(S8)((U16)((x)>>8))
+	//Extract L part of S16. The result is an unsigned number
+	#define S16L( x )	\
+		(U8)((U16)(x) & (U16)0x00ff)
 	//calculate the log base 2 of X (U8), if fail return 255
 	#define LOG2U8( x )	\
 		((x == 128)?(7):( ((x == 64)?(6):( ((x == 32)?(5):( ((x == 16)?(4):( ((x == 8)?(3):( ((x == 4)?(2):( ((x == 2)?(1):( ((x == 1)?(0):(255)) )) )) )) )) )) )) ))
@@ -162,6 +168,85 @@
 	#define IS_NUMBER( x )	\
 		(((x) >= '0') && ((x) <= '9'))
 
+	//divide by 2^n
+	#define SHIFT( a, s )	\
+		((a) >> (s))
+
+	//residual of a shift by s position right (divide by 2^n)
+	#define SHIFT_RES( a, s )	\
+		((a) & ((1<<(s))-1))
+
+	//signed shift
+	#define SSHIFT( a, s )	\
+		(((a) < 0) ? -SHIFT( (-(a)), (s)) : SHIFT( (a), (s)) )
+
+	//residual of a signed shift
+	#define SSHIFT_RES( a, s )	\
+		( ((a) < 0) ? -SHIFT_RES( (-(a)), (s) ) : SHIFT_RES( (a), (s) ) )
+
+	//multiply by 2^n
+	#define SHIFTL( a, s )	\
+		((a) << (s))
+
+	/****************************************************************************
+	** DEBUG MACROS
+	****************************************************************************/
+
+		///********************************************************************************
+		///	DEBUG MACROS
+		///********************************************************************************
+		//powerful macros that add debug functionality (require printf)
+
+	#ifdef DEBUG_PRINTF
+		#include <stdio.h>
+		#define DPRINTF_VARS()
+
+		#define DPRINTF_START()
+
+		#define DPRINTF_STOP()
+
+		#define DPRINTF_DEPTH( level )
+
+		#define DPRINTF_DISPLAY_DEPTH( level )
+
+		#define DPRINTF( ... )	\
+			printf( __VA_ARGS__ )
+
+		#warning "debug printf active"
+	#else
+		#ifdef DEBUG_FILE
+			#define DPRINTF_VARS()	\
+				FILE  *fdebug = NULL;	\
+				U8 dlevel = 0, min_dlevel = 0;
+
+			#define DPRINTF_START()	\
+				fdebug = fopen( "debug.log", "w+")
+
+			#define DPRINTF_STOP()	\
+				((fdebug != NULL)?fclose(fdebug),fdebug = NULL:(0))
+
+			//Specify the minimum level to display
+			#define DPRINTF_DISPLAY_DEPTH( level )	\
+				min_dlevel = level;
+
+			#define DPRINTF( level, ... )	\
+				((fdebug != NULL) && (level >= min_dlevel)?fprintf(fdebug, __VA_ARGS__ ):(0))
+
+			#warning "debug file active"
+		#else
+			#define DPRINTF_VARS()
+
+			#define DPRINTF_START()
+
+			#define DPRINTF_STOP()
+
+			#define DPRINTF_DEPTH( level )
+
+			#define DPRINTF_DISPLAY_DEPTH( level )
+
+			#define DPRINTF( ... )
+		#endif
+	#endif
 
 	/****************************************************************************
 	** CIRCULAR BUFFER MACROS
@@ -365,10 +450,17 @@
 	#define AT_BUF_KICK_SAFER( buf )	\
 		( ((buf).status.kick_flag == 1) ? (2) : ( (((buf).status.kick_flag = 1), ( AT_BUF_NUMELEM( buf ) > 0 )) ? ((AT_BUF_KICK( buf )), ((buf).status.kick_flag = 0), (0)) : (((buf).status.kick_flag = 0), (1))        ) )
 
-
 	/****************************************************************************
 	** PRESCALER CALCULATION MACROS
 	****************************************************************************/
+
+	/*******************************************
+	**	AT_ABS
+	*******************************************/
+
+	//Absolute value
+	#define AT_ABS( x )	\
+		((x>=0)?(x):(-(x)))
 
 	/*******************************************
 	**	AT_OCR
@@ -486,6 +578,25 @@
 	#define AT_SAT_3SUM( x, y, z, up_bound, low_bound )	\
 		( ( (AT_SAT_SUM( (x), (y), (up_bound), (low_bound) ) == (up_bound)) && ((z) < 0) ) || ( (AT_SAT_SUM( (x), (y), (up_bound), (low_bound) ) == (low_bound)) && ((z) > 0) ) )?AT_SAT_SUM( AT_SAT_SUM( (x), (z), (up_bound), (low_bound) ), (y), (up_bound), (low_bound) ):AT_SAT_SUM( AT_SAT_SUM( (x), (y), (up_bound), (low_bound) ), (z), (up_bound), (low_bound) )
 
+		///********************************************************************************
+		///	AT_TOP_INC
+		///********************************************************************************
+		//	Increment. If increment would exceed top -> reset
+		//	Ex. top = 7
+		//	cnt = 0, 1, 2, 3, 4, 5, 6, 7, 0, ...
+
+	#define AT_TOP_INC( cnt, top )	\
+		(((cnt) == (top))?(0):((cnt)+1))
+
+		///********************************************************************************
+		///	CIRCULAR SUM
+		///********************************************************************************
+		//	This function allow sum to work like an 8bit var would start again from 0 once a sum overflow
+		//	sometime this is useful
+		//	TODO: I can handle the case when i go around max multiple times
+
+	#define AT_CIRCULAR_SUM( x, y, max )	\
+		( ((x +y) >= (max))?(x +y -max):(x +y) )
 
 		///********************************************************************************
 		///	DIVISION HANDLING
@@ -496,6 +607,10 @@
 
 	#define AT_DIVIDE( x, fp )	\
 		( (x) / (1 << (fp) ) )
+
+	//sign correction for negative values
+	#define AT_DIVIDE_NEG( x, fp )	\
+		( (x >= 0)?AT_DIVIDE(x,fp):(-(AT_DIVIDE(-(x),fp))) )
 
 		///********************************************************************************
 		///	DIVISION HANDLING (ROUND TOWARD NEGATIVE)
@@ -615,6 +730,19 @@
 	#define SAT_ROUND_MUL8( x, y, fp )	\
 		((int16_t)((x) * (y) / (1 << (fp))) >= (int16_t)MAX_INT8)?(int8_t)MAX_INT8:( ((int16_t)((x) * (y) / (1 << (fp))) <= (int16_t)MIN_INT8)?(int8_t)MIN_INT8:(((fp>0) && ((x*y)&(1<<(fp-1))))?(((x*y)>0)?((int8_t)( (int16_t)0x00ff & (int16_t)((x) * (y) / (1 << (fp))+1))):((int8_t)( (int16_t)0x00ff & (int16_t)((x) * (y) / (1 << (fp))-1)))):(int8_t)( (int16_t)0x00ff & (int16_t)((x) * (y) / (1 << (fp))))) )
 
+		///********************************************************************************
+		///	AT_MUL_ONE Multiply a number by a frection m/2^n Rounded Toward Odd
+		///********************************************************************************
+		///	This function execute a*m/2^n where m/2^n must be <1. It's a very common operation
+		///	I start by subtracting (a) with its remainder (a/2^n)*2^n
+		///	Then I multiply that by m, and divide by 2^n with the RTO function
+		///	Then I sum the unrounded division. If I do this part first, i would need 2a maximum (bad)
+
+	#define AT_MUL_ONE( a, m, n ) \
+		( AT_DIVIDE_RTO( ((a-((a/MASK(n))*MASK(n)))*m) , n ) +((a/MASK(n))*m) )
+
+    #define AT_MUL_NEG_ONE( a, m, n) \
+		((a<0)?(-AT_MUL_ONE( (-(a)), m, n )):AT_MUL_ONE( a, m, n ))
 #else
 	#warning "multiple inclusion of at_utils.h"
 #endif
