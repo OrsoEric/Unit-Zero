@@ -1,5 +1,6 @@
 # Unit-Zero
 Lego Quadruped Servo Robot  
+[Blog](https://fatherofmachines.blogspot.com/p/robot-unit-zero.html)  
 
 Robot Images (below):  
 ![Unit Zero V2017-05](https://raw.githubusercontent.com/OrsoEric/Unit-Zero/main/Hardware%20-%20LEGO/2017-05%20Unit%20Zero%20LEGO.JPG)
