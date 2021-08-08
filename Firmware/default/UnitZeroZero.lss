@@ -1,0 +1,2892 @@
+
+UnitZeroZero.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         0000001e  00800100  00000d62  00000df6  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000d62  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          00000052  0080011e  0080011e  00000e14  2**0
+                  ALLOC
+  3 .debug_aranges 000000a0  00000000  00000000  00000e14  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_pubnames 00000275  00000000  00000000  00000eb4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00001005  00000000  00000000  00001129  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000631  00000000  00000000  0000212e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000e39  00000000  00000000  0000275f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  000001a0  00000000  00000000  00003598  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000468  00000000  00000000  00003738  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000b4c  00000000  00000000  00003ba0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__ctors_end>
+   4:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+   8:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+   c:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  10:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  14:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  18:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  1c:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  20:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  24:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  28:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  2c:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  30:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  34:	0c 94 eb 04 	jmp	0x9d6	; 0x9d6 <__vector_13>
+  38:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  3c:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  40:	0c 94 c6 04 	jmp	0x98c	; 0x98c <__vector_16>
+  44:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  48:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  4c:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  50:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  54:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  58:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  5c:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  60:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  64:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  68:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  6c:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  70:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  74:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  78:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+
+0000007c <__ctors_end>:
+  7c:	11 24       	eor	r1, r1
+  7e:	1f be       	out	0x3f, r1	; 63
+  80:	cf ef       	ldi	r28, 0xFF	; 255
+  82:	d8 e0       	ldi	r29, 0x08	; 8
+  84:	de bf       	out	0x3e, r29	; 62
+  86:	cd bf       	out	0x3d, r28	; 61
+
+00000088 <__do_copy_data>:
+  88:	11 e0       	ldi	r17, 0x01	; 1
+  8a:	a0 e0       	ldi	r26, 0x00	; 0
+  8c:	b1 e0       	ldi	r27, 0x01	; 1
+  8e:	e2 e6       	ldi	r30, 0x62	; 98
+  90:	fd e0       	ldi	r31, 0x0D	; 13
+  92:	02 c0       	rjmp	.+4      	; 0x98 <.do_copy_data_start>
+
+00000094 <.do_copy_data_loop>:
+  94:	05 90       	lpm	r0, Z+
+  96:	0d 92       	st	X+, r0
+
+00000098 <.do_copy_data_start>:
+  98:	ae 31       	cpi	r26, 0x1E	; 30
+  9a:	b1 07       	cpc	r27, r17
+  9c:	d9 f7       	brne	.-10     	; 0x94 <.do_copy_data_loop>
+
+0000009e <__do_clear_bss>:
+  9e:	11 e0       	ldi	r17, 0x01	; 1
+  a0:	ae e1       	ldi	r26, 0x1E	; 30
+  a2:	b1 e0       	ldi	r27, 0x01	; 1
+  a4:	01 c0       	rjmp	.+2      	; 0xa8 <.do_clear_bss_start>
+
+000000a6 <.do_clear_bss_loop>:
+  a6:	1d 92       	st	X+, r1
+
+000000a8 <.do_clear_bss_start>:
+  a8:	a0 37       	cpi	r26, 0x70	; 112
+  aa:	b1 07       	cpc	r27, r17
+  ac:	e1 f7       	brne	.-8      	; 0xa6 <.do_clear_bss_loop>
+  ae:	0e 94 c4 05 	call	0xb88	; 0xb88 <main>
+  b2:	0c 94 af 06 	jmp	0xd5e	; 0xd5e <_exit>
+
+000000b6 <__bad_interrupt>:
+  b6:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+000000ba <lcd_send_cmd>:
+	//	This routine is used to send a command. use hard wired delay. Used only during init
+
+	//write 4 bit of command to the LCD data port, define decide if low or high bits are written
+	//macro will always use the 4 LSB of the input
+	//Send the 4MSB of cmd first, I move them to LSB for the macro to send, the macro will move them to the appropriate position
+	LCD_WRITE( cmd >> 4 );
+  ba:	98 b1       	in	r25, 0x08	; 8
+  bc:	28 2f       	mov	r18, r24
+  be:	20 7f       	andi	r18, 0xF0	; 240
+  c0:	9f 70       	andi	r25, 0x0F	; 15
+  c2:	29 2b       	or	r18, r25
+  c4:	28 b9       	out	0x08, r18	; 8
+	//Clear RS: I'm sending an'instruction
+	CLEAR_BIT( RS_PORT, RS_PIN );
+  c6:	43 98       	cbi	0x08, 3	; 8
+	//Strobe the enable pin, time specify the delay after each edge
+	STROBE_EN( EN_STROBE_TIME );
+  c8:	42 9a       	sbi	0x08, 2	; 8
+    milliseconds can be achieved.
+ */
+void
+_delay_loop_2(uint16_t __count)
+{
+	__asm__ volatile (
+  ca:	28 ee       	ldi	r18, 0xE8	; 232
+  cc:	33 e0       	ldi	r19, 0x03	; 3
+  ce:	f9 01       	movw	r30, r18
+  d0:	31 97       	sbiw	r30, 0x01	; 1
+  d2:	f1 f7       	brne	.-4      	; 0xd0 <lcd_send_cmd+0x16>
+  d4:	42 98       	cbi	0x08, 2	; 8
+  d6:	f9 01       	movw	r30, r18
+  d8:	31 97       	sbiw	r30, 0x01	; 1
+  da:	f1 f7       	brne	.-4      	; 0xd8 <lcd_send_cmd+0x1e>
+	//Now send the 4LSB of cmd
+	LCD_WRITE( cmd );
+  dc:	98 b1       	in	r25, 0x08	; 8
+  de:	82 95       	swap	r24
+  e0:	80 7f       	andi	r24, 0xF0	; 240
+  e2:	9f 70       	andi	r25, 0x0F	; 15
+  e4:	98 2b       	or	r25, r24
+  e6:	98 b9       	out	0x08, r25	; 8
+	//Strobe the enable pin, time specify the delay after each edge
+	STROBE_EN( EN_STROBE_TIME );
+  e8:	42 9a       	sbi	0x08, 2	; 8
+  ea:	c9 01       	movw	r24, r18
+  ec:	01 97       	sbiw	r24, 0x01	; 1
+  ee:	f1 f7       	brne	.-4      	; 0xec <lcd_send_cmd+0x32>
+  f0:	42 98       	cbi	0x08, 2	; 8
+  f2:	c9 01       	movw	r24, r18
+  f4:	01 97       	sbiw	r24, 0x01	; 1
+  f6:	f1 f7       	brne	.-4      	; 0xf4 <lcd_send_cmd+0x3a>
+	//***********************************************************************
+	//	RETURN
+	//***********************************************************************
+
+	return;
+}   //End function: lcd_send_cmd
+  f8:	80 e1       	ldi	r24, 0x10	; 16
+  fa:	97 e2       	ldi	r25, 0x27	; 39
+  fc:	01 97       	sbiw	r24, 0x01	; 1
+  fe:	f1 f7       	brne	.-4      	; 0xfc <lcd_send_cmd+0x42>
+ 100:	08 95       	ret
+
+00000102 <lcd_init>:
+	//SET_BIT( u8t, 1 );
+	//Don't Care
+	//SET_BIT( u8t, 0 );
+	//Send the command a special way (this time only)
+	//BUG: The default mode for the LCD is 8bit, the first command must be sent twice, and this way
+	lcd_send_cmd( u8t >> 4 );
+ 102:	82 e0       	ldi	r24, 0x02	; 2
+ 104:	0e 94 5d 00 	call	0xba	; 0xba <lcd_send_cmd>
+	//Send the command
+	lcd_send_cmd( u8t );
+ 108:	88 e2       	ldi	r24, 0x28	; 40
+ 10a:	0e 94 5d 00 	call	0xba	; 0xba <lcd_send_cmd>
+	//Clear the temp var
+	u8t = 0x00;
+	//Command 0
+	SET_BIT( u8t, 0 );
+	//Send the command
+	lcd_send_cmd( u8t );
+ 10e:	81 e0       	ldi	r24, 0x01	; 1
+ 110:	0e 94 5d 00 	call	0xba	; 0xba <lcd_send_cmd>
+	//Blink Cursor
+	//	0	|	Don't Blink
+	//	1	|	Blink
+	//SET_BIT( u8t, 0 );
+	//Send the command
+	lcd_send_cmd( u8t );
+ 114:	8c e0       	ldi	r24, 0x0C	; 12
+ 116:	0e 94 5d 00 	call	0xba	; 0xba <lcd_send_cmd>
+ 11a:	ec e2       	ldi	r30, 0x2C	; 44
+ 11c:	f1 e0       	ldi	r31, 0x01	; 1
+
+	//For every digit
+	for (u8t = 0;u8t < LCD_ROW*LCD_COL; u8t++)
+	{
+		//initialize the show vector with spaces
+		lcd_show[ u8t ]		= ' ';
+ 11e:	80 e2       	ldi	r24, 0x20	; 32
+ 120:	81 93       	st	Z+, r24
+		///	INITIALIZE VARIABILES
+		///----------------------------------------------------------------------
+		//Here, I initialize the lcd variabiles
+
+	//For every digit
+	for (u8t = 0;u8t < LCD_ROW*LCD_COL; u8t++)
+ 122:	91 e0       	ldi	r25, 0x01	; 1
+ 124:	ec 34       	cpi	r30, 0x4C	; 76
+ 126:	f9 07       	cpc	r31, r25
+ 128:	d9 f7       	brne	.-10     	; 0x120 <lcd_init+0x1e>
+	}
+	//For every 8 digit bit
+	for (u8t = 0;u8t < LCD_UPDT; u8t++)
+	{
+		//initialize the 8 update bit to 0 (0 = up to date)
+		lcd_updt[ u8t ]		= 0;
+ 12a:	10 92 26 01 	sts	0x0126, r1
+ 12e:	10 92 27 01 	sts	0x0127, r1
+ 132:	10 92 28 01 	sts	0x0128, r1
+ 136:	10 92 29 01 	sts	0x0129, r1
+	}
+	//Clear configuration flags (defaults)
+	lcd_cfg_flags			= 0x00;
+ 13a:	10 92 2a 01 	sts	0x012A, r1
+	//Error code
+	lcd_error 				= LCD_OK;
+ 13e:	10 92 2b 01 	sts	0x012B, r1
+	//***********************************************************************
+	//	RETURN
+	//***********************************************************************
+
+	return;
+}   //End function: lcd_init
+ 142:	08 95       	ret
+
+00000144 <lcd_update>:
+	///	BODY
+	///**************************************************************************
+
+	///Fetch
+	//Move status var to temp vars
+	exe_temp 		= status.exe;
+ 144:	30 91 1f 01 	lds	r19, 0x011F
+ 148:	83 2f       	mov	r24, r19
+ 14a:	82 95       	swap	r24
+ 14c:	86 95       	lsr	r24
+ 14e:	83 70       	andi	r24, 0x03	; 3
+	scan_temp 		= status.scan;
+ 150:	63 2f       	mov	r22, r19
+ 152:	6f 71       	andi	r22, 0x1F	; 31
+	///FSM
+	//If: S0 - IDLE
+	if (exe_temp == 0)
+ 154:	88 23       	and	r24, r24
+ 156:	09 f0       	breq	.+2      	; 0x15a <lcd_update+0x16>
+ 158:	8c c0       	rjmp	.+280    	; 0x272 <lcd_update+0x12e>
+		//what I do is to generate a mask with 1 after the scan index
+		//The & with the flag byte will return 1 if I have at least one rised flag to scan
+		//otherwise I will scan the next bytes
+		///
+		//generate the mask, the position inside the byte is the 3LSB of scan
+		u8t = (0xff << (scan_temp & 0x07));
+ 15a:	e6 2f       	mov	r30, r22
+ 15c:	f0 e0       	ldi	r31, 0x00	; 0
+ 15e:	af 01       	movw	r20, r30
+ 160:	47 70       	andi	r20, 0x07	; 7
+ 162:	50 70       	andi	r21, 0x00	; 0
+		//fetch the current flag byte, , the index of the vector is the 2MSB of scan
+		u8t1 = lcd_updt[ ((scan_temp & 0x18) >> 3) ];
+ 164:	53 e0       	ldi	r21, 0x03	; 3
+ 166:	f6 95       	lsr	r31
+ 168:	e7 95       	ror	r30
+ 16a:	5a 95       	dec	r21
+ 16c:	e1 f7       	brne	.-8      	; 0x166 <lcd_update+0x22>
+ 16e:	ea 5d       	subi	r30, 0xDA	; 218
+ 170:	fe 4f       	sbci	r31, 0xFE	; 254
+ 172:	e0 81       	ld	r30, Z
+		//If: The byte currently pointed by scan, still has unreaded update flag
+		if ((u8t & u8t1) != 0x00)
+ 174:	8f ef       	ldi	r24, 0xFF	; 255
+ 176:	90 e0       	ldi	r25, 0x00	; 0
+ 178:	04 2e       	mov	r0, r20
+ 17a:	02 c0       	rjmp	.+4      	; 0x180 <lcd_update+0x3c>
+ 17c:	88 0f       	add	r24, r24
+ 17e:	99 1f       	adc	r25, r25
+ 180:	0a 94       	dec	r0
+ 182:	e2 f7       	brpl	.-8      	; 0x17c <lcd_update+0x38>
+ 184:	8e 23       	and	r24, r30
+ 186:	a9 f0       	breq	.+42     	; 0x1b2 <lcd_update+0x6e>
+		{
+			//Here: I know there is at least one rised flag after scan position. I search for it.
+			//Create a mask with a 1 in scan
+			u8t = MASK( scan_temp & 0x07 );
+ 188:	81 e0       	ldi	r24, 0x01	; 1
+ 18a:	90 e0       	ldi	r25, 0x00	; 0
+ 18c:	02 c0       	rjmp	.+4      	; 0x192 <lcd_update+0x4e>
+ 18e:	88 0f       	add	r24, r24
+ 190:	99 1f       	adc	r25, r25
+ 192:	4a 95       	dec	r20
+ 194:	e2 f7       	brpl	.-8      	; 0x18e <lcd_update+0x4a>
+ 196:	98 2f       	mov	r25, r24
+ 198:	20 91 2b 01 	lds	r18, 0x012B
+ 19c:	07 c0       	rjmp	.+14     	; 0x1ac <lcd_update+0x68>
+			//While: mobile mask scan. shift up the bit and & with lcd_updt until I find the flag I'm searching for
+			while (u8t != 0x00)
+			{
+				//If: I found the flag
+				if ((u8t & u8t1) != 0x00)
+ 19e:	89 2f       	mov	r24, r25
+ 1a0:	8e 23       	and	r24, r30
+ 1a2:	61 f5       	brne	.+88     	; 0x1fc <lcd_update+0xb8>
+				else
+				{
+					//increase scan while I'm at it
+					scan_temp++;
+					//Scan the next bit. u8t will overflow to 0x00 once I'm done
+					u8t = u8t << 1;
+ 1a4:	99 0f       	add	r25, r25
+					//If: the mask overflowed
+					if (u8t == 0x00)
+ 1a6:	09 f4       	brne	.+2      	; 0x1aa <lcd_update+0x66>
+ 1a8:	23 e6       	ldi	r18, 0x63	; 99
+				}	// End If: I found the flag
+				//If: I did not find the flag
+				else
+				{
+					//increase scan while I'm at it
+					scan_temp++;
+ 1aa:	6f 5f       	subi	r22, 0xFF	; 255
+		{
+			//Here: I know there is at least one rised flag after scan position. I search for it.
+			//Create a mask with a 1 in scan
+			u8t = MASK( scan_temp & 0x07 );
+			//While: mobile mask scan. shift up the bit and & with lcd_updt until I find the flag I'm searching for
+			while (u8t != 0x00)
+ 1ac:	99 23       	and	r25, r25
+ 1ae:	b9 f7       	brne	.-18     	; 0x19e <lcd_update+0x5a>
+ 1b0:	25 c0       	rjmp	.+74     	; 0x1fc <lcd_update+0xb8>
+			//The fourth is the starting byte, but I have not scanned all bits of it
+			//	0	1	2	3
+			//	->	| -> scan
+			///Setup var
+			//clear the 3LSB of scan index, i will start bit search from the first bit of the byte
+			scan_temp = scan_temp & 0x18;
+ 1b2:	63 2f       	mov	r22, r19
+ 1b4:	68 71       	andi	r22, 0x18	; 24
+			//Get the byte index
+			u8t1 = ((scan_temp & 0x18) >> 3);
+ 1b6:	26 2f       	mov	r18, r22
+ 1b8:	26 95       	lsr	r18
+ 1ba:	26 95       	lsr	r18
+ 1bc:	26 95       	lsr	r18
+ 1be:	31 e0       	ldi	r19, 0x01	; 1
+			///Search
+			//While: Scan (LCD_UPDT) byte after the one pointed by scan for a rised flag
+			while (u8t <= LCD_UPDT)
+			{
+				//Fetch the content of the byte I'm scanning.
+				u8t2 = lcd_updt[ u8t1 ];
+ 1c0:	82 2f       	mov	r24, r18
+ 1c2:	90 e0       	ldi	r25, 0x00	; 0
+				//If: the byte I'm scanning contain at least one rised flag
+				if (u8t2 != 0x00)
+ 1c4:	fc 01       	movw	r30, r24
+ 1c6:	ea 5d       	subi	r30, 0xDA	; 218
+ 1c8:	fe 4f       	sbci	r31, 0xFE	; 254
+ 1ca:	e0 81       	ld	r30, Z
+ 1cc:	ee 23       	and	r30, r30
+ 1ce:	81 f4       	brne	.+32     	; 0x1f0 <lcd_update+0xac>
+				}
+				//If: the byte I'm scanning contain no rised flags
+				else
+				{
+					//Advance relative increment
+					u8t++;
+ 1d0:	3f 5f       	subi	r19, 0xFF	; 255
+					//Advance the absolute index
+					u8t1 = ((u8t1 +1) >= (LCD_UPDT))?(0):(u8t1+1);
+ 1d2:	03 97       	sbiw	r24, 0x03	; 3
+ 1d4:	14 f0       	brlt	.+4      	; 0x1da <lcd_update+0x96>
+ 1d6:	20 e0       	ldi	r18, 0x00	; 0
+ 1d8:	01 c0       	rjmp	.+2      	; 0x1dc <lcd_update+0x98>
+ 1da:	2f 5f       	subi	r18, 0xFF	; 255
+					//I update scan index while I'm at it, i advance by 8 bits
+					scan_temp = AT_CIRCULAR_SUM( scan_temp, 8, LCD_ROW *LCD_COL );
+ 1dc:	86 2f       	mov	r24, r22
+ 1de:	90 e0       	ldi	r25, 0x00	; 0
+ 1e0:	48 97       	sbiw	r24, 0x18	; 24
+ 1e2:	14 f0       	brlt	.+4      	; 0x1e8 <lcd_update+0xa4>
+ 1e4:	68 51       	subi	r22, 0x18	; 24
+ 1e6:	01 c0       	rjmp	.+2      	; 0x1ea <lcd_update+0xa6>
+ 1e8:	68 5f       	subi	r22, 0xF8	; 248
+					//If: the search failed, it means that there are NO risen flags
+					if (u8t > LCD_UPDT)
+ 1ea:	35 30       	cpi	r19, 0x05	; 5
+ 1ec:	49 f7       	brne	.-46     	; 0x1c0 <lcd_update+0x7c>
+ 1ee:	08 95       	ret
+			//I have found a byte with a risen flag, I have to find the bit now
+			///Setup
+			//mask with LSB rised
+			u8t = 0x01;
+			//u8t1 has the index, I fetch the content instead. Scan temp already point to the first bit of that byte
+			u8t1 = lcd_updt[ u8t1 ];
+ 1f0:	20 91 2b 01 	lds	r18, 0x012B
+ 1f4:	91 e0       	ldi	r25, 0x01	; 1
+			///Search
+			//While: I'm searching for a rised flag inside a byte
+			while (u8t != 0x00)
+			{
+				//If: I find the flag I'm looking for
+				if ((u8t & u8t1) != 0x00)
+ 1f6:	89 2f       	mov	r24, r25
+ 1f8:	8e 23       	and	r24, r30
+ 1fa:	19 f0       	breq	.+6      	; 0x202 <lcd_update+0xbe>
+ 1fc:	20 93 2b 01 	sts	0x012B, r18
+ 200:	07 c0       	rjmp	.+14     	; 0x210 <lcd_update+0xcc>
+				}
+				//If: flag is clear
+				else
+				{
+					//advance mask
+					u8t = u8t << 1;
+ 202:	99 0f       	add	r25, r25
+					//while I'm at it, I update the scan index as well
+					scan_temp++;
+ 204:	6f 5f       	subi	r22, 0xFF	; 255
+					//If: I completed the scan and didn't find the flag
+					if (u8t == 0x00)
+ 206:	99 23       	and	r25, r25
+ 208:	b1 f7       	brne	.-20     	; 0x1f6 <lcd_update+0xb2>
+ 20a:	83 e6       	ldi	r24, 0x63	; 99
+ 20c:	80 93 2b 01 	sts	0x012B, r24
+		//scan_temp hold the position of a char to be processed
+		///LOAD DATA BUFFER, UPDATE STATUS VARS, JUMP
+		//BUG(SOLVED): the cursor from 0,15 move out of screen to 0,16 NOT 1,0 For this position only, I always have to specify the address
+		//BUG(SOLVED): the cursoe does not move from 1,15 to 0,0 either. if the 4LSB of scan_temp are 0, send address
+		//If: the cursor is already in the correct position
+		if (((scan_temp & 0x0f) != 0) && (scan_temp == status.cursor))
+ 210:	e6 2f       	mov	r30, r22
+ 212:	f0 e0       	ldi	r31, 0x00	; 0
+ 214:	cf 01       	movw	r24, r30
+ 216:	8f 70       	andi	r24, 0x0F	; 15
+ 218:	90 70       	andi	r25, 0x00	; 0
+ 21a:	89 2b       	or	r24, r25
+ 21c:	91 f0       	breq	.+36     	; 0x242 <lcd_update+0xfe>
+ 21e:	80 91 20 01 	lds	r24, 0x0120
+ 222:	86 95       	lsr	r24
+ 224:	8f 71       	andi	r24, 0x1F	; 31
+ 226:	68 17       	cp	r22, r24
+ 228:	61 f4       	brne	.+24     	; 0x242 <lcd_update+0xfe>
+		{
+			//I will skip sending the address
+			status.adr 		= 0;
+ 22a:	80 91 1f 01 	lds	r24, 0x011F
+ 22e:	8f 77       	andi	r24, 0x7F	; 127
+ 230:	80 93 1f 01 	sts	0x011F, r24
+			//Load data into the buffer
+			u8t 			= lcd_show[ scan_temp ];
+ 234:	e4 5d       	subi	r30, 0xD4	; 212
+ 236:	fe 4f       	sbci	r31, 0xFE	; 254
+ 238:	90 81       	ld	r25, Z
+			data_buf 		= u8t;
+ 23a:	90 93 1e 01 	sts	0x011E, r25
+			//SET RS line, i'm sending data
+			SET_BIT( RS_PORT, RS_PIN );
+ 23e:	43 9a       	sbi	0x08, 3	; 8
+ 240:	12 c0       	rjmp	.+36     	; 0x266 <lcd_update+0x122>
+		}
+		//If: I have to move the cursor
+		else
+		{
+			//I'm sending the address
+			status.adr 		= 1;
+ 242:	80 91 1f 01 	lds	r24, 0x011F
+ 246:	80 68       	ori	r24, 0x80	; 128
+ 248:	80 93 1f 01 	sts	0x011F, r24
+			//Load data into the buffer
+			//	B7='1' is signature for DDRAM write instruction
+			//	B6='1' is address for the second row, i have to move B4 to B6
+			//	B3...B0 is the LSB of the address
+			u8t 			= MASK(7) | ((scan_temp & 0x10) << 2) | (scan_temp & 0x0f);
+ 24c:	96 2f       	mov	r25, r22
+ 24e:	9f 70       	andi	r25, 0x0F	; 15
+ 250:	90 68       	ori	r25, 0x80	; 128
+ 252:	e0 71       	andi	r30, 0x10	; 16
+ 254:	f0 70       	andi	r31, 0x00	; 0
+ 256:	ee 0f       	add	r30, r30
+ 258:	ff 1f       	adc	r31, r31
+ 25a:	ee 0f       	add	r30, r30
+ 25c:	ff 1f       	adc	r31, r31
+ 25e:	9e 2b       	or	r25, r30
+			data_buf 		= u8t;
+ 260:	90 93 1e 01 	sts	0x011E, r25
+			//CLEAR RS line, i'm sending an address
+			CLEAR_BIT( RS_PORT, RS_PIN );
+ 264:	43 98       	cbi	0x08, 3	; 8
+			DPRINTF("S0 - Sending cursor position: scan: %d cursor: %d adr: %x\n", scan_temp, status.cursor, u8t);
+		}
+		//I'm sending the H part
+		status.h		= 1;
+ 266:	80 91 20 01 	lds	r24, 0x0120
+ 26a:	81 60       	ori	r24, 0x01	; 1
+ 26c:	80 93 20 01 	sts	0x0120, r24
+ 270:	39 c0       	rjmp	.+114    	; 0x2e4 <lcd_update+0x1a0>
+		LCD_WRITE( u8t >> 4 );
+		//Jump to S1)
+		exe_temp 		= 1;
+	}	//End If: S0 - IDLE
+	//If: S1 - SET EN
+	else if (exe_temp == 1)
+ 272:	81 30       	cpi	r24, 0x01	; 1
+ 274:	19 f4       	brne	.+6      	; 0x27c <lcd_update+0x138>
+	{
+		DPRINTF("S1 - SET_EN\n");
+
+		SET_BIT( EN_PORT, EN_PIN );
+ 276:	42 9a       	sbi	0x08, 2	; 8
+ 278:	92 e0       	ldi	r25, 0x02	; 2
+ 27a:	82 c0       	rjmp	.+260    	; 0x380 <lcd_update+0x23c>
+ 27c:	93 2f       	mov	r25, r19
+ 27e:	90 78       	andi	r25, 0x80	; 128
+		//Jump S2)
+		exe_temp 		= 2;
+	}	//End If: S1 - SET EN
+	//If: S2 - CLEAR EN
+	else if (exe_temp == 2)
+ 280:	82 30       	cpi	r24, 0x02	; 2
+ 282:	49 f4       	brne	.+18     	; 0x296 <lcd_update+0x152>
+	{
+		//
+		CLEAR_BIT( EN_PORT, EN_PIN );
+ 284:	42 98       	cbi	0x08, 2	; 8
+		//If I have sent DATA(L)
+		if ((status.adr == 0) && (status.h == 0))
+ 286:	99 23       	and	r25, r25
+ 288:	09 f0       	breq	.+2      	; 0x28c <lcd_update+0x148>
+ 28a:	79 c0       	rjmp	.+242    	; 0x37e <lcd_update+0x23a>
+ 28c:	80 91 20 01 	lds	r24, 0x0120
+ 290:	80 fd       	sbrc	r24, 0
+ 292:	75 c0       	rjmp	.+234    	; 0x37e <lcd_update+0x23a>
+ 294:	75 c0       	rjmp	.+234    	; 0x380 <lcd_update+0x23c>
+		///----------------------------------------------------------------------
+		//	The final state, i use status.h, status.adr and data_buf
+		//	Here i setup DATA and RS line, and jump to S1) to strobe EN line
+
+		//If: I have sent ADR(H)
+		if ((status.adr == 1) && (status.h == 1))
+ 296:	99 23       	and	r25, r25
+ 298:	59 f1       	breq	.+86     	; 0x2f0 <lcd_update+0x1ac>
+ 29a:	20 91 20 01 	lds	r18, 0x0120
+ 29e:	20 ff       	sbrs	r18, 0
+ 2a0:	13 c0       	rjmp	.+38     	; 0x2c8 <lcd_update+0x184>
+		{
+			///Send ADR(L)
+			//Clear H flag
+			status.h 			= 0;
+ 2a2:	82 2f       	mov	r24, r18
+ 2a4:	8e 7f       	andi	r24, 0xFE	; 254
+ 2a6:	80 93 20 01 	sts	0x0120, r24
+			//load 4LSB of data buffer
+			u8t 				= data_buf;
+			//Send ADR(L)
+			LCD_WRITE( u8t & 0x0f );
+ 2aa:	98 b1       	in	r25, 0x08	; 8
+ 2ac:	80 91 1e 01 	lds	r24, 0x011E
+ 2b0:	82 95       	swap	r24
+ 2b2:	80 7f       	andi	r24, 0xF0	; 240
+ 2b4:	9f 70       	andi	r25, 0x0F	; 15
+ 2b6:	89 2b       	or	r24, r25
+ 2b8:	88 b9       	out	0x08, r24	; 8
+			///Update cursor
+			//I have written ADR, I need to update the cursor
+			status.cursor = scan_temp;
+ 2ba:	86 2f       	mov	r24, r22
+ 2bc:	88 0f       	add	r24, r24
+ 2be:	20 7c       	andi	r18, 0xC0	; 192
+ 2c0:	28 2b       	or	r18, r24
+ 2c2:	20 93 20 01 	sts	0x0120, r18
+ 2c6:	55 c0       	rjmp	.+170    	; 0x372 <lcd_update+0x22e>
+		//If: I have sent ADR(L)
+		else if ((status.adr == 1) && (status.h == 0))
+		{
+			///Send DATA(H)
+			//Set RS line (I'm sending data, not instructuins)
+			SET_BIT( RS_PORT, RS_PIN );
+ 2c8:	43 9a       	sbi	0x08, 3	; 8
+			//Clear ADR flag
+			status.adr 			= 0;
+ 2ca:	3f 77       	andi	r19, 0x7F	; 127
+ 2cc:	30 93 1f 01 	sts	0x011F, r19
+			//Set H flag
+			status.h 			= 1;
+ 2d0:	21 60       	ori	r18, 0x01	; 1
+ 2d2:	20 93 20 01 	sts	0x0120, r18
+			//load digit into buffer
+			//Remember that user can async write into it, that's why I need a buffer in the first place
+			u8t 				= lcd_show[ scan_temp ];
+ 2d6:	e6 2f       	mov	r30, r22
+ 2d8:	f0 e0       	ldi	r31, 0x00	; 0
+ 2da:	e4 5d       	subi	r30, 0xD4	; 212
+ 2dc:	fe 4f       	sbci	r31, 0xFE	; 254
+ 2de:	90 81       	ld	r25, Z
+			data_buf			= u8t;
+ 2e0:	90 93 1e 01 	sts	0x011E, r25
+			//Send DATA(H)
+			LCD_WRITE( u8t >> 4 );
+ 2e4:	88 b1       	in	r24, 0x08	; 8
+ 2e6:	90 7f       	andi	r25, 0xF0	; 240
+ 2e8:	8f 70       	andi	r24, 0x0F	; 15
+ 2ea:	98 2b       	or	r25, r24
+ 2ec:	98 b9       	out	0x08, r25	; 8
+ 2ee:	41 c0       	rjmp	.+130    	; 0x372 <lcd_update+0x22e>
+			DPRINTF("S3 - Send DATA MSB\n");
+		}
+		//If: I have sent DATA(H)
+		else if ((status.adr == 0) && (status.h == 1))
+ 2f0:	80 91 20 01 	lds	r24, 0x0120
+ 2f4:	80 ff       	sbrs	r24, 0
+ 2f6:	3f c0       	rjmp	.+126    	; 0x376 <lcd_update+0x232>
+		{
+			///Send DATA(L)
+			//Clear H flag
+			status.h 			= 0;
+ 2f8:	8e 7f       	andi	r24, 0xFE	; 254
+ 2fa:	80 93 20 01 	sts	0x0120, r24
+			//load 4LSB of data buffer
+			u8t 				= data_buf;
+ 2fe:	20 91 1e 01 	lds	r18, 0x011E
+			//Send ADR(L)
+			LCD_WRITE( u8t & 0x0f );
+ 302:	88 b1       	in	r24, 0x08	; 8
+ 304:	92 2f       	mov	r25, r18
+ 306:	92 95       	swap	r25
+ 308:	90 7f       	andi	r25, 0xF0	; 240
+ 30a:	8f 70       	andi	r24, 0x0F	; 15
+ 30c:	98 2b       	or	r25, r24
+ 30e:	98 b9       	out	0x08, r25	; 8
+			///Update lcd_updt
+			//If: the LCD is synced with lcd_show
+			if (u8t == lcd_show[ scan_temp ])
+ 310:	46 2f       	mov	r20, r22
+ 312:	50 e0       	ldi	r21, 0x00	; 0
+ 314:	fa 01       	movw	r30, r20
+ 316:	e4 5d       	subi	r30, 0xD4	; 212
+ 318:	fe 4f       	sbci	r31, 0xFE	; 254
+ 31a:	80 81       	ld	r24, Z
+ 31c:	28 17       	cp	r18, r24
+ 31e:	b9 f4       	brne	.+46     	; 0x34e <lcd_update+0x20a>
+			{
+				//I can clear the flag, B3 B4 address the byte inside the vector, B0-B2 address the bit inside the byte
+				CLEAR_BIT( lcd_updt[ ((scan_temp & 0x18) >> 3) ], (scan_temp & 0x07) );
+ 320:	fa 01       	movw	r30, r20
+ 322:	e8 71       	andi	r30, 0x18	; 24
+ 324:	f0 70       	andi	r31, 0x00	; 0
+ 326:	83 e0       	ldi	r24, 0x03	; 3
+ 328:	f5 95       	asr	r31
+ 32a:	e7 95       	ror	r30
+ 32c:	8a 95       	dec	r24
+ 32e:	e1 f7       	brne	.-8      	; 0x328 <lcd_update+0x1e4>
+ 330:	ea 5d       	subi	r30, 0xDA	; 218
+ 332:	fe 4f       	sbci	r31, 0xFE	; 254
+ 334:	47 70       	andi	r20, 0x07	; 7
+ 336:	50 70       	andi	r21, 0x00	; 0
+ 338:	81 e0       	ldi	r24, 0x01	; 1
+ 33a:	90 e0       	ldi	r25, 0x00	; 0
+ 33c:	02 c0       	rjmp	.+4      	; 0x342 <lcd_update+0x1fe>
+ 33e:	88 0f       	add	r24, r24
+ 340:	99 1f       	adc	r25, r25
+ 342:	4a 95       	dec	r20
+ 344:	e2 f7       	brpl	.-8      	; 0x33e <lcd_update+0x1fa>
+ 346:	80 95       	com	r24
+ 348:	20 81       	ld	r18, Z
+ 34a:	82 23       	and	r24, r18
+ 34c:	80 83       	st	Z, r24
+			}
+			///Update cursor
+			//A successful write to the LCD will advance the cursor
+			u8t = status.cursor;
+ 34e:	80 91 20 01 	lds	r24, 0x0120
+ 352:	86 95       	lsr	r24
+ 354:	8f 71       	andi	r24, 0x1F	; 31
+			//circular increment of cursor
+			u8t = ((u8t +1) < (LCD_ROW*LCD_COL))?(u8t +1):(0);
+ 356:	8f 31       	cpi	r24, 0x1F	; 31
+ 358:	11 f4       	brne	.+4      	; 0x35e <lcd_update+0x21a>
+ 35a:	90 e0       	ldi	r25, 0x00	; 0
+ 35c:	02 c0       	rjmp	.+4      	; 0x362 <lcd_update+0x21e>
+ 35e:	98 2f       	mov	r25, r24
+ 360:	9f 5f       	subi	r25, 0xFF	; 255
+			//write back cursor
+			status.cursor = u8t;
+ 362:	9f 71       	andi	r25, 0x1F	; 31
+ 364:	99 0f       	add	r25, r25
+ 366:	80 91 20 01 	lds	r24, 0x0120
+ 36a:	81 7c       	andi	r24, 0xC1	; 193
+ 36c:	89 2b       	or	r24, r25
+ 36e:	80 93 20 01 	sts	0x0120, r24
+ 372:	91 e0       	ldi	r25, 0x01	; 1
+ 374:	05 c0       	rjmp	.+10     	; 0x380 <lcd_update+0x23c>
+		}
+		//If: I have sent DATA(L), but I should have quit earlier (no need to strobe again). This is an error
+		else
+		{
+			//
+			LCD_ERROR( LCD_WTF );
+ 376:	83 e6       	ldi	r24, 0x63	; 99
+ 378:	80 93 2b 01 	sts	0x012B, r24
+ 37c:	fa cf       	rjmp	.-12     	; 0x372 <lcd_update+0x22e>
+ 37e:	93 e0       	ldi	r25, 0x03	; 3
+	///**************************************************************************
+	///	WRITE BACK
+	///**************************************************************************
+
+	//save updated status var
+	status.exe 		= exe_temp;
+ 380:	92 95       	swap	r25
+ 382:	99 0f       	add	r25, r25
+ 384:	90 7e       	andi	r25, 0xE0	; 224
+ 386:	80 91 1f 01 	lds	r24, 0x011F
+ 38a:	80 78       	andi	r24, 0x80	; 128
+	status.scan 	= scan_temp;
+ 38c:	6f 71       	andi	r22, 0x1F	; 31
+ 38e:	89 2b       	or	r24, r25
+ 390:	86 2b       	or	r24, r22
+ 392:	80 93 1f 01 	sts	0x011F, r24
+ 396:	08 95       	ret
+
+00000398 <lcd_config>:
+	//***********************************************************************
+	//	BODY
+	//***********************************************************************
+
+	//Configure number alignment for the print functions
+	if (cfg == LCD_ADJ)
+ 398:	88 23       	and	r24, r24
+ 39a:	79 f4       	brne	.+30     	; 0x3ba <lcd_config+0x22>
+	{
+		//If the user wants left adjust (write MSB on pos and go right)
+		if (val == LCD_ADJ_L)
+ 39c:	62 30       	cpi	r22, 0x02	; 2
+ 39e:	31 f4       	brne	.+12     	; 0x3ac <lcd_config+0x14>
+		{
+			SET_BIT( lcd_cfg_flags, LCD_ADJ_FLAG );
+ 3a0:	80 91 2a 01 	lds	r24, 0x012A
+ 3a4:	81 60       	ori	r24, 0x01	; 1
+ 3a6:	80 93 2a 01 	sts	0x012A, r24
+ 3aa:	08 95       	ret
+		}
+		//If the user wants right adjust (write LSB on pos and go left) (Default)
+		if (val == LCD_ADJ_R)
+ 3ac:	61 30       	cpi	r22, 0x01	; 1
+ 3ae:	29 f4       	brne	.+10     	; 0x3ba <lcd_config+0x22>
+		{
+			CLEAR_BIT( lcd_cfg_flags, LCD_ADJ_FLAG );
+ 3b0:	80 91 2a 01 	lds	r24, 0x012A
+ 3b4:	8e 7f       	andi	r24, 0xFE	; 254
+ 3b6:	80 93 2a 01 	sts	0x012A, r24
+ 3ba:	08 95       	ret
+
+000003bc <lcd_print_char>:
+
+	///**************************************************************************
+	///	PARAMETER CHECK
+	///**************************************************************************
+
+	if (pos > (LCD_ROW*LCD_COL))
+ 3bc:	81 32       	cpi	r24, 0x21	; 33
+ 3be:	20 f0       	brcs	.+8      	; 0x3c8 <lcd_print_char+0xc>
+	{
+		//error, Out Of Bound write
+		LCD_ERROR( LCD_OOB );
+ 3c0:	8a e0       	ldi	r24, 0x0A	; 10
+ 3c2:	80 93 2b 01 	sts	0x012B, r24
+ 3c6:	08 95       	ret
+	///**************************************************************************
+	//	I only do something if I'm writing something different in lcd_show
+	//	This already is a huge improvement from V2.0 which always sent commands
+
+	//If: I'm writing a different byte to a location
+	if (lcd_show[ pos ] != data )
+ 3c8:	28 2f       	mov	r18, r24
+ 3ca:	30 e0       	ldi	r19, 0x00	; 0
+ 3cc:	f9 01       	movw	r30, r18
+ 3ce:	e4 5d       	subi	r30, 0xD4	; 212
+ 3d0:	fe 4f       	sbci	r31, 0xFE	; 254
+ 3d2:	80 81       	ld	r24, Z
+ 3d4:	86 17       	cp	r24, r22
+ 3d6:	b9 f0       	breq	.+46     	; 0x406 <lcd_print_char+0x4a>
+	{
+		//write the new data
+		lcd_show[ pos ] = data;
+ 3d8:	60 83       	st	Z, r22
+		//Rise the update bit
+		//	Location inside the vector is pos/8
+		//	Bit position inside the Location is the 3LSB of pos (reminder of division by 8)
+		SET_BIT( lcd_updt[ ((pos & 0x18) >> 3) ], (pos & 0x07) );
+ 3da:	f9 01       	movw	r30, r18
+ 3dc:	e8 71       	andi	r30, 0x18	; 24
+ 3de:	f0 70       	andi	r31, 0x00	; 0
+ 3e0:	63 e0       	ldi	r22, 0x03	; 3
+ 3e2:	f5 95       	asr	r31
+ 3e4:	e7 95       	ror	r30
+ 3e6:	6a 95       	dec	r22
+ 3e8:	e1 f7       	brne	.-8      	; 0x3e2 <lcd_print_char+0x26>
+ 3ea:	ea 5d       	subi	r30, 0xDA	; 218
+ 3ec:	fe 4f       	sbci	r31, 0xFE	; 254
+ 3ee:	27 70       	andi	r18, 0x07	; 7
+ 3f0:	30 70       	andi	r19, 0x00	; 0
+ 3f2:	81 e0       	ldi	r24, 0x01	; 1
+ 3f4:	90 e0       	ldi	r25, 0x00	; 0
+ 3f6:	02 c0       	rjmp	.+4      	; 0x3fc <lcd_print_char+0x40>
+ 3f8:	88 0f       	add	r24, r24
+ 3fa:	99 1f       	adc	r25, r25
+ 3fc:	2a 95       	dec	r18
+ 3fe:	e2 f7       	brpl	.-8      	; 0x3f8 <lcd_print_char+0x3c>
+ 400:	20 81       	ld	r18, Z
+ 402:	28 2b       	or	r18, r24
+ 404:	20 83       	st	Z, r18
+ 406:	08 95       	ret
+
+00000408 <lcd_print_str>:
+**	Print a string starting from screen position
+**	If reach EOL, it starts from the following one
+****************************************************************************/
+
+void lcd_print_str( U8 pos, U8 *str )
+{
+ 408:	ef 92       	push	r14
+ 40a:	ff 92       	push	r15
+ 40c:	0f 93       	push	r16
+ 40e:	1f 93       	push	r17
+ 410:	cf 93       	push	r28
+ 412:	df 93       	push	r29
+ 414:	08 2f       	mov	r16, r24
+ 416:	eb 01       	movw	r28, r22
+	//***********************************************************************
+	//	PARAMETER CHECK
+	//***********************************************************************
+
+	//If: NULL pointer
+	if (str == NULL)
+ 418:	61 15       	cp	r22, r1
+ 41a:	71 05       	cpc	r23, r1
+ 41c:	a9 f0       	breq	.+42     	; 0x448 <lcd_print_str+0x40>
+	{
+		return;
+ 41e:	10 e0       	ldi	r17, 0x00	; 0
+	//***********************************************************************
+
+	//Initialise
+	t = 0;
+	//While: I have char or I have space on screen
+	while ( ((pos +t) <= (LCD_ROW *LCD_COL)) && (str[ t ] != '\0') )
+ 420:	e8 2e       	mov	r14, r24
+ 422:	ff 24       	eor	r15, r15
+ 424:	05 c0       	rjmp	.+10     	; 0x430 <lcd_print_str+0x28>
+	{
+		//Print char on screen
+		lcd_print_char( pos +t, str[ t ] );
+ 426:	81 2f       	mov	r24, r17
+ 428:	80 0f       	add	r24, r16
+ 42a:	0e 94 de 01 	call	0x3bc	; 0x3bc <lcd_print_char>
+		//next char
+		t++;
+ 42e:	1f 5f       	subi	r17, 0xFF	; 255
+	//***********************************************************************
+
+	//Initialise
+	t = 0;
+	//While: I have char or I have space on screen
+	while ( ((pos +t) <= (LCD_ROW *LCD_COL)) && (str[ t ] != '\0') )
+ 430:	e1 2f       	mov	r30, r17
+ 432:	f0 e0       	ldi	r31, 0x00	; 0
+ 434:	cf 01       	movw	r24, r30
+ 436:	8e 0d       	add	r24, r14
+ 438:	9f 1d       	adc	r25, r15
+ 43a:	81 97       	sbiw	r24, 0x21	; 33
+ 43c:	2c f4       	brge	.+10     	; 0x448 <lcd_print_str+0x40>
+ 43e:	ec 0f       	add	r30, r28
+ 440:	fd 1f       	adc	r31, r29
+ 442:	60 81       	ld	r22, Z
+ 444:	66 23       	and	r22, r22
+ 446:	79 f7       	brne	.-34     	; 0x426 <lcd_print_str+0x1e>
+	//***********************************************************************
+	//	RETURN
+	//***********************************************************************
+
+	return;
+}	//End function: print_str
+ 448:	df 91       	pop	r29
+ 44a:	cf 91       	pop	r28
+ 44c:	1f 91       	pop	r17
+ 44e:	0f 91       	pop	r16
+ 450:	ff 90       	pop	r15
+ 452:	ef 90       	pop	r14
+ 454:	08 95       	ret
+
+00000456 <lcd_print_s16>:
+**	RIGHT 	|123		LEFT	|123
+**			|  1			 	|1
+****************************************************************************/
+
+void lcd_print_s16( U8 pos, S16 num )
+{
+ 456:	8f 92       	push	r8
+ 458:	9f 92       	push	r9
+ 45a:	af 92       	push	r10
+ 45c:	bf 92       	push	r11
+ 45e:	cf 92       	push	r12
+ 460:	df 92       	push	r13
+ 462:	ef 92       	push	r14
+ 464:	ff 92       	push	r15
+ 466:	0f 93       	push	r16
+ 468:	1f 93       	push	r17
+ 46a:	df 93       	push	r29
+ 46c:	cf 93       	push	r28
+ 46e:	cd b7       	in	r28, 0x3d	; 61
+ 470:	de b7       	in	r29, 0x3e	; 62
+ 472:	27 97       	sbiw	r28, 0x07	; 7
+ 474:	0f b6       	in	r0, 0x3f	; 63
+ 476:	f8 94       	cli
+ 478:	de bf       	out	0x3e, r29	; 62
+ 47a:	0f be       	out	0x3f, r0	; 63
+ 47c:	cd bf       	out	0x3d, r28	; 61
+ 47e:	88 2e       	mov	r8, r24
+ 480:	cb 01       	movw	r24, r22
+	//***********************************************************************
+	//	BODY
+	//***********************************************************************
+
+	//convert the number
+	ret = s16_to_str( num, str );
+ 482:	8e 01       	movw	r16, r28
+ 484:	0f 5f       	subi	r16, 0xFF	; 255
+ 486:	1f 4f       	sbci	r17, 0xFF	; 255
+ 488:	b8 01       	movw	r22, r16
+ 48a:	0e 94 65 04 	call	0x8ca	; 0x8ca <s16_to_str>
+ 48e:	98 2e       	mov	r9, r24
+ 490:	90 e0       	ldi	r25, 0x00	; 0
+ 492:	06 97       	sbiw	r24, 0x06	; 6
+ 494:	68 01       	movw	r12, r16
+ 496:	c8 0e       	add	r12, r24
+ 498:	d9 1e       	adc	r13, r25
+ 49a:	06 96       	adiw	r24, 0x06	; 6
+ 49c:	ee 24       	eor	r14, r14
+ 49e:	ff 24       	eor	r15, r15
+		}	//End If: left alignment
+		//If: right alignment
+		else
+		{
+			//If: I'm outside the number (yes, that's the condition,right adjustment is messy)
+			if ((u8t +ret ) <= (MAX_DIGIT16 +1))
+ 4a0:	5c 01       	movw	r10, r24
+	//***********************************************************************
+	//	BODY
+	//***********************************************************************
+
+	//convert the number
+	ret = s16_to_str( num, str );
+ 4a2:	2e 2d       	mov	r18, r14
+	//For: every digit
+	for (u8t = 0;u8t < (MAX_DIGIT16 +1); u8t++)
+	{
+		//If: sign handling
+		if (u8t == 0)
+ 4a4:	ee 20       	and	r14, r14
+ 4a6:	11 f4       	brne	.+4      	; 0x4ac <lcd_print_s16+0x56>
+		{
+			//Print sign
+			u8t1 = str[ u8t ];
+ 4a8:	69 81       	ldd	r22, Y+1	; 0x01
+ 4aa:	13 c0       	rjmp	.+38     	; 0x4d2 <lcd_print_s16+0x7c>
+		}	//End If: sign handling
+		//If: left alignment
+		else if (IS_BIT_ONE( lcd_cfg_flags, LCD_ADJ_FLAG ))
+ 4ac:	80 91 2a 01 	lds	r24, 0x012A
+ 4b0:	80 ff       	sbrs	r24, 0
+ 4b2:	06 c0       	rjmp	.+12     	; 0x4c0 <lcd_print_s16+0x6a>
+		{
+			//If: I'm outside the number
+			if (u8t >= ret)
+ 4b4:	e9 14       	cp	r14, r9
+ 4b6:	60 f4       	brcc	.+24     	; 0x4d0 <lcd_print_s16+0x7a>
+				u8t1 = ' ';
+			}
+			else
+			{
+				//Print number
+				u8t1 = str[ u8t ];
+ 4b8:	f8 01       	movw	r30, r16
+ 4ba:	ee 0d       	add	r30, r14
+ 4bc:	ff 1d       	adc	r31, r15
+ 4be:	06 c0       	rjmp	.+12     	; 0x4cc <lcd_print_s16+0x76>
+		}	//End If: left alignment
+		//If: right alignment
+		else
+		{
+			//If: I'm outside the number (yes, that's the condition,right adjustment is messy)
+			if ((u8t +ret ) <= (MAX_DIGIT16 +1))
+ 4c0:	c7 01       	movw	r24, r14
+ 4c2:	8a 0d       	add	r24, r10
+ 4c4:	9b 1d       	adc	r25, r11
+ 4c6:	07 97       	sbiw	r24, 0x07	; 7
+ 4c8:	1c f0       	brlt	.+6      	; 0x4d0 <lcd_print_s16+0x7a>
+			}
+			//If: I'm writing a digit
+			else
+			{
+				//print number, I have to write digit in a mesi order with this adjust
+				u8t1 = str[ u8t -1 +ret -MAX_DIGIT16 ];
+ 4ca:	f6 01       	movw	r30, r12
+ 4cc:	60 81       	ld	r22, Z
+ 4ce:	01 c0       	rjmp	.+2      	; 0x4d2 <lcd_print_s16+0x7c>
+ 4d0:	60 e2       	ldi	r22, 0x20	; 32
+			}
+		}	//End If: right alignment
+		//I want to call a single print, I have calculated the argument based on the settings of the print
+		lcd_print_char( pos +u8t, u8t1 );
+ 4d2:	82 2f       	mov	r24, r18
+ 4d4:	88 0d       	add	r24, r8
+ 4d6:	0e 94 de 01 	call	0x3bc	; 0x3bc <lcd_print_char>
+ 4da:	08 94       	sec
+ 4dc:	e1 1c       	adc	r14, r1
+ 4de:	f1 1c       	adc	r15, r1
+ 4e0:	08 94       	sec
+ 4e2:	c1 1c       	adc	r12, r1
+ 4e4:	d1 1c       	adc	r13, r1
+	//***********************************************************************
+
+	//convert the number
+	ret = s16_to_str( num, str );
+	//For: every digit
+	for (u8t = 0;u8t < (MAX_DIGIT16 +1); u8t++)
+ 4e6:	f6 e0       	ldi	r31, 0x06	; 6
+ 4e8:	ef 16       	cp	r14, r31
+ 4ea:	f1 04       	cpc	r15, r1
+ 4ec:	d1 f6       	brne	.-76     	; 0x4a2 <lcd_print_s16+0x4c>
+	//***********************************************************************
+	//	RETURN
+	//***********************************************************************
+
+	return;
+}   //End function: lcd_print_s16
+ 4ee:	27 96       	adiw	r28, 0x07	; 7
+ 4f0:	0f b6       	in	r0, 0x3f	; 63
+ 4f2:	f8 94       	cli
+ 4f4:	de bf       	out	0x3e, r29	; 62
+ 4f6:	0f be       	out	0x3f, r0	; 63
+ 4f8:	cd bf       	out	0x3d, r28	; 61
+ 4fa:	cf 91       	pop	r28
+ 4fc:	df 91       	pop	r29
+ 4fe:	1f 91       	pop	r17
+ 500:	0f 91       	pop	r16
+ 502:	ff 90       	pop	r15
+ 504:	ef 90       	pop	r14
+ 506:	df 90       	pop	r13
+ 508:	cf 90       	pop	r12
+ 50a:	bf 90       	pop	r11
+ 50c:	af 90       	pop	r10
+ 50e:	9f 90       	pop	r9
+ 510:	8f 90       	pop	r8
+ 512:	08 95       	ret
+
+00000514 <lcd_print_u16>:
+**	RIGHT 	|123		LEFT	|123
+**			|  1			 	|1
+****************************************************************************/
+
+void lcd_print_u16( U8 pos, U16 num )
+{
+ 514:	8f 92       	push	r8
+ 516:	9f 92       	push	r9
+ 518:	af 92       	push	r10
+ 51a:	bf 92       	push	r11
+ 51c:	cf 92       	push	r12
+ 51e:	df 92       	push	r13
+ 520:	ef 92       	push	r14
+ 522:	ff 92       	push	r15
+ 524:	0f 93       	push	r16
+ 526:	1f 93       	push	r17
+ 528:	df 93       	push	r29
+ 52a:	cf 93       	push	r28
+ 52c:	00 d0       	rcall	.+0      	; 0x52e <lcd_print_u16+0x1a>
+ 52e:	00 d0       	rcall	.+0      	; 0x530 <lcd_print_u16+0x1c>
+ 530:	00 d0       	rcall	.+0      	; 0x532 <lcd_print_u16+0x1e>
+ 532:	cd b7       	in	r28, 0x3d	; 61
+ 534:	de b7       	in	r29, 0x3e	; 62
+ 536:	88 2e       	mov	r8, r24
+ 538:	cb 01       	movw	r24, r22
+	//***********************************************************************
+	//	BODY
+	//***********************************************************************
+
+	//convert the number
+	ret = u16_to_str( num, str );
+ 53a:	8e 01       	movw	r16, r28
+ 53c:	0f 5f       	subi	r16, 0xFF	; 255
+ 53e:	1f 4f       	sbci	r17, 0xFF	; 255
+ 540:	b8 01       	movw	r22, r16
+ 542:	0e 94 fa 03 	call	0x7f4	; 0x7f4 <u16_to_str>
+ 546:	98 2e       	mov	r9, r24
+ 548:	90 e0       	ldi	r25, 0x00	; 0
+ 54a:	05 97       	sbiw	r24, 0x05	; 5
+ 54c:	68 01       	movw	r12, r16
+ 54e:	c8 0e       	add	r12, r24
+ 550:	d9 1e       	adc	r13, r25
+ 552:	05 96       	adiw	r24, 0x05	; 5
+ 554:	ee 24       	eor	r14, r14
+ 556:	ff 24       	eor	r15, r15
+		}	//End If: left alignment
+		//If: right alignment
+		else
+		{
+			//If: I'm outside the number (yes, that's the condition,right adjustment is messy)
+			if ((u8t +ret) < MAX_DIGIT16)
+ 558:	5c 01       	movw	r10, r24
+	ret = u16_to_str( num, str );
+	//For: every digit
+	for (u8t = 0;u8t < MAX_DIGIT16; u8t++)
+	{
+		//If: left alignment
+		if (IS_BIT_ONE( lcd_cfg_flags, LCD_ADJ_FLAG ))
+ 55a:	80 91 2a 01 	lds	r24, 0x012A
+ 55e:	80 ff       	sbrs	r24, 0
+ 560:	06 c0       	rjmp	.+12     	; 0x56e <lcd_print_u16+0x5a>
+		{
+			//If: I'm outside the number
+			if (u8t >= ret)
+ 562:	e9 14       	cp	r14, r9
+ 564:	60 f4       	brcc	.+24     	; 0x57e <lcd_print_u16+0x6a>
+				u8t1 = ' ';
+			}
+			else
+			{
+				//Print number
+				u8t1 = str[ u8t ];
+ 566:	f8 01       	movw	r30, r16
+ 568:	ee 0d       	add	r30, r14
+ 56a:	ff 1d       	adc	r31, r15
+ 56c:	06 c0       	rjmp	.+12     	; 0x57a <lcd_print_u16+0x66>
+		}	//End If: left alignment
+		//If: right alignment
+		else
+		{
+			//If: I'm outside the number (yes, that's the condition,right adjustment is messy)
+			if ((u8t +ret) < MAX_DIGIT16)
+ 56e:	c7 01       	movw	r24, r14
+ 570:	8a 0d       	add	r24, r10
+ 572:	9b 1d       	adc	r25, r11
+ 574:	05 97       	sbiw	r24, 0x05	; 5
+ 576:	1c f0       	brlt	.+6      	; 0x57e <lcd_print_u16+0x6a>
+			}
+			//If: I'm writing a digit
+			else
+			{
+				//print number, I have to write digit in a mesi order with this adjust
+				u8t1 = str[ u8t +ret -MAX_DIGIT16 ];
+ 578:	f6 01       	movw	r30, r12
+ 57a:	60 81       	ld	r22, Z
+ 57c:	01 c0       	rjmp	.+2      	; 0x580 <lcd_print_u16+0x6c>
+ 57e:	60 e2       	ldi	r22, 0x20	; 32
+			}
+		}	//End If: right alignment
+		//I want to call a single print, I have calculated the argument based on the settings of the print
+		lcd_print_char( pos +u8t, u8t1 );
+ 580:	88 2d       	mov	r24, r8
+ 582:	8e 0d       	add	r24, r14
+ 584:	0e 94 de 01 	call	0x3bc	; 0x3bc <lcd_print_char>
+ 588:	08 94       	sec
+ 58a:	e1 1c       	adc	r14, r1
+ 58c:	f1 1c       	adc	r15, r1
+ 58e:	08 94       	sec
+ 590:	c1 1c       	adc	r12, r1
+ 592:	d1 1c       	adc	r13, r1
+	//***********************************************************************
+
+	//convert the number
+	ret = u16_to_str( num, str );
+	//For: every digit
+	for (u8t = 0;u8t < MAX_DIGIT16; u8t++)
+ 594:	f5 e0       	ldi	r31, 0x05	; 5
+ 596:	ef 16       	cp	r14, r31
+ 598:	f1 04       	cpc	r15, r1
+ 59a:	f9 f6       	brne	.-66     	; 0x55a <lcd_print_u16+0x46>
+	//***********************************************************************
+	//	RETURN
+	//***********************************************************************
+
+	return;
+}   //End function: lcd_print_u16
+ 59c:	26 96       	adiw	r28, 0x06	; 6
+ 59e:	0f b6       	in	r0, 0x3f	; 63
+ 5a0:	f8 94       	cli
+ 5a2:	de bf       	out	0x3e, r29	; 62
+ 5a4:	0f be       	out	0x3f, r0	; 63
+ 5a6:	cd bf       	out	0x3d, r28	; 61
+ 5a8:	cf 91       	pop	r28
+ 5aa:	df 91       	pop	r29
+ 5ac:	1f 91       	pop	r17
+ 5ae:	0f 91       	pop	r16
+ 5b0:	ff 90       	pop	r15
+ 5b2:	ef 90       	pop	r14
+ 5b4:	df 90       	pop	r13
+ 5b6:	cf 90       	pop	r12
+ 5b8:	bf 90       	pop	r11
+ 5ba:	af 90       	pop	r10
+ 5bc:	9f 90       	pop	r9
+ 5be:	8f 90       	pop	r8
+ 5c0:	08 95       	ret
+
+000005c2 <lcd_print_s8>:
+**	RIGHT 	|123		LEFT	|123
+**			|  1			 	|1
+****************************************************************************/
+
+void lcd_print_s8( U8 pos, S8 num )
+{
+ 5c2:	8f 92       	push	r8
+ 5c4:	9f 92       	push	r9
+ 5c6:	af 92       	push	r10
+ 5c8:	bf 92       	push	r11
+ 5ca:	cf 92       	push	r12
+ 5cc:	df 92       	push	r13
+ 5ce:	ef 92       	push	r14
+ 5d0:	ff 92       	push	r15
+ 5d2:	0f 93       	push	r16
+ 5d4:	1f 93       	push	r17
+ 5d6:	df 93       	push	r29
+ 5d8:	cf 93       	push	r28
+ 5da:	00 d0       	rcall	.+0      	; 0x5dc <lcd_print_s8+0x1a>
+ 5dc:	00 d0       	rcall	.+0      	; 0x5de <lcd_print_s8+0x1c>
+ 5de:	0f 92       	push	r0
+ 5e0:	cd b7       	in	r28, 0x3d	; 61
+ 5e2:	de b7       	in	r29, 0x3e	; 62
+ 5e4:	88 2e       	mov	r8, r24
+ 5e6:	86 2f       	mov	r24, r22
+	//***********************************************************************
+	//	BODY
+	//***********************************************************************
+
+	//convert the number
+	ret = s8_to_str( num, str );
+ 5e8:	8e 01       	movw	r16, r28
+ 5ea:	0f 5f       	subi	r16, 0xFF	; 255
+ 5ec:	1f 4f       	sbci	r17, 0xFF	; 255
+ 5ee:	b8 01       	movw	r22, r16
+ 5f0:	0e 94 e8 03 	call	0x7d0	; 0x7d0 <s8_to_str>
+ 5f4:	98 2e       	mov	r9, r24
+ 5f6:	90 e0       	ldi	r25, 0x00	; 0
+ 5f8:	04 97       	sbiw	r24, 0x04	; 4
+ 5fa:	68 01       	movw	r12, r16
+ 5fc:	c8 0e       	add	r12, r24
+ 5fe:	d9 1e       	adc	r13, r25
+ 600:	04 96       	adiw	r24, 0x04	; 4
+ 602:	ee 24       	eor	r14, r14
+ 604:	ff 24       	eor	r15, r15
+		}	//End If: left alignment
+		//If: right alignment
+		else
+		{
+			//If: I'm outside the number (yes, that's the condition,right adjustment is messy)
+			if ((u8t +ret ) <= (MAX_DIGIT8 +1))
+ 606:	5c 01       	movw	r10, r24
+	//***********************************************************************
+	//	BODY
+	//***********************************************************************
+
+	//convert the number
+	ret = s8_to_str( num, str );
+ 608:	2e 2d       	mov	r18, r14
+	//For: every digit
+	for (u8t = 0;u8t < (MAX_DIGIT8 +1); u8t++)
+	{
+		//If: sign handling
+		if (u8t == 0)
+ 60a:	ee 20       	and	r14, r14
+ 60c:	11 f4       	brne	.+4      	; 0x612 <lcd_print_s8+0x50>
+		{
+			//Print sign
+			u8t1 = str[ u8t ];
+ 60e:	69 81       	ldd	r22, Y+1	; 0x01
+ 610:	13 c0       	rjmp	.+38     	; 0x638 <lcd_print_s8+0x76>
+		}	//End If: sign handling
+		//If: left alignment
+		else if (IS_BIT_ONE( lcd_cfg_flags, LCD_ADJ_FLAG ))
+ 612:	80 91 2a 01 	lds	r24, 0x012A
+ 616:	80 ff       	sbrs	r24, 0
+ 618:	06 c0       	rjmp	.+12     	; 0x626 <lcd_print_s8+0x64>
+		{
+			//If: I'm outside the number
+			if (u8t >= ret)
+ 61a:	e9 14       	cp	r14, r9
+ 61c:	60 f4       	brcc	.+24     	; 0x636 <lcd_print_s8+0x74>
+				u8t1 = ' ';
+			}
+			else
+			{
+				//Print number
+				u8t1 = str[ u8t ];
+ 61e:	f8 01       	movw	r30, r16
+ 620:	ee 0d       	add	r30, r14
+ 622:	ff 1d       	adc	r31, r15
+ 624:	06 c0       	rjmp	.+12     	; 0x632 <lcd_print_s8+0x70>
+		}	//End If: left alignment
+		//If: right alignment
+		else
+		{
+			//If: I'm outside the number (yes, that's the condition,right adjustment is messy)
+			if ((u8t +ret ) <= (MAX_DIGIT8 +1))
+ 626:	c7 01       	movw	r24, r14
+ 628:	8a 0d       	add	r24, r10
+ 62a:	9b 1d       	adc	r25, r11
+ 62c:	05 97       	sbiw	r24, 0x05	; 5
+ 62e:	1c f0       	brlt	.+6      	; 0x636 <lcd_print_s8+0x74>
+			}
+			//If: I'm writing a digit
+			else
+			{
+				//print number, I have to write digit in a mesi order with this adjust
+				u8t1 = str[ u8t -1 +ret -MAX_DIGIT8 ];
+ 630:	f6 01       	movw	r30, r12
+ 632:	60 81       	ld	r22, Z
+ 634:	01 c0       	rjmp	.+2      	; 0x638 <lcd_print_s8+0x76>
+ 636:	60 e2       	ldi	r22, 0x20	; 32
+			}
+		}	//End If: right alignment
+		//I want to call a single print, I have calculated the argument based on the settings of the print
+		lcd_print_char( pos +u8t, u8t1 );
+ 638:	82 2f       	mov	r24, r18
+ 63a:	88 0d       	add	r24, r8
+ 63c:	0e 94 de 01 	call	0x3bc	; 0x3bc <lcd_print_char>
+ 640:	08 94       	sec
+ 642:	e1 1c       	adc	r14, r1
+ 644:	f1 1c       	adc	r15, r1
+ 646:	08 94       	sec
+ 648:	c1 1c       	adc	r12, r1
+ 64a:	d1 1c       	adc	r13, r1
+	//***********************************************************************
+
+	//convert the number
+	ret = s8_to_str( num, str );
+	//For: every digit
+	for (u8t = 0;u8t < (MAX_DIGIT8 +1); u8t++)
+ 64c:	f4 e0       	ldi	r31, 0x04	; 4
+ 64e:	ef 16       	cp	r14, r31
+ 650:	f1 04       	cpc	r15, r1
+ 652:	d1 f6       	brne	.-76     	; 0x608 <lcd_print_s8+0x46>
+	//***********************************************************************
+	//	RETURN
+	//***********************************************************************
+
+	return;
+}   //End function: lcd_print_s8
+ 654:	0f 90       	pop	r0
+ 656:	0f 90       	pop	r0
+ 658:	0f 90       	pop	r0
+ 65a:	0f 90       	pop	r0
+ 65c:	0f 90       	pop	r0
+ 65e:	cf 91       	pop	r28
+ 660:	df 91       	pop	r29
+ 662:	1f 91       	pop	r17
+ 664:	0f 91       	pop	r16
+ 666:	ff 90       	pop	r15
+ 668:	ef 90       	pop	r14
+ 66a:	df 90       	pop	r13
+ 66c:	cf 90       	pop	r12
+ 66e:	bf 90       	pop	r11
+ 670:	af 90       	pop	r10
+ 672:	9f 90       	pop	r9
+ 674:	8f 90       	pop	r8
+ 676:	08 95       	ret
+
+00000678 <lcd_print_u8>:
+**	RIGHT 	|123		LEFT	|123
+**			|  1			 	|1
+****************************************************************************/
+
+void lcd_print_u8( U8 pos, U8 num )
+{
+ 678:	8f 92       	push	r8
+ 67a:	9f 92       	push	r9
+ 67c:	af 92       	push	r10
+ 67e:	bf 92       	push	r11
+ 680:	cf 92       	push	r12
+ 682:	df 92       	push	r13
+ 684:	ef 92       	push	r14
+ 686:	ff 92       	push	r15
+ 688:	0f 93       	push	r16
+ 68a:	1f 93       	push	r17
+ 68c:	df 93       	push	r29
+ 68e:	cf 93       	push	r28
+ 690:	00 d0       	rcall	.+0      	; 0x692 <lcd_print_u8+0x1a>
+ 692:	00 d0       	rcall	.+0      	; 0x694 <lcd_print_u8+0x1c>
+ 694:	cd b7       	in	r28, 0x3d	; 61
+ 696:	de b7       	in	r29, 0x3e	; 62
+ 698:	88 2e       	mov	r8, r24
+ 69a:	86 2f       	mov	r24, r22
+	//***********************************************************************
+	//	BODY
+	//***********************************************************************
+
+	//convert the number
+	ret = u8_to_str( num, str );
+ 69c:	8e 01       	movw	r16, r28
+ 69e:	0f 5f       	subi	r16, 0xFF	; 255
+ 6a0:	1f 4f       	sbci	r17, 0xFF	; 255
+ 6a2:	b8 01       	movw	r22, r16
+ 6a4:	0e 94 90 03 	call	0x720	; 0x720 <u8_to_str>
+ 6a8:	98 2e       	mov	r9, r24
+ 6aa:	90 e0       	ldi	r25, 0x00	; 0
+ 6ac:	03 97       	sbiw	r24, 0x03	; 3
+ 6ae:	68 01       	movw	r12, r16
+ 6b0:	c8 0e       	add	r12, r24
+ 6b2:	d9 1e       	adc	r13, r25
+ 6b4:	03 96       	adiw	r24, 0x03	; 3
+ 6b6:	ee 24       	eor	r14, r14
+ 6b8:	ff 24       	eor	r15, r15
+		}	//End If: left alignment
+		//If: right alignment
+		else
+		{
+			//If: I'm outside the number (yes, that's the condition,right adjustment is messy)
+			if ((u8t +ret) < MAX_DIGIT8)
+ 6ba:	5c 01       	movw	r10, r24
+	ret = u8_to_str( num, str );
+	//For: every digit
+	for (u8t = 0;u8t < MAX_DIGIT8; u8t++)
+	{
+		//If: left alignment
+		if (IS_BIT_ONE( lcd_cfg_flags, LCD_ADJ_FLAG ))
+ 6bc:	80 91 2a 01 	lds	r24, 0x012A
+ 6c0:	80 ff       	sbrs	r24, 0
+ 6c2:	06 c0       	rjmp	.+12     	; 0x6d0 <lcd_print_u8+0x58>
+		{
+			//If: I'm outside the number
+			if (u8t >= ret)
+ 6c4:	e9 14       	cp	r14, r9
+ 6c6:	60 f4       	brcc	.+24     	; 0x6e0 <lcd_print_u8+0x68>
+				u8t1 = ' ';
+			}
+			else
+			{
+				//Print number
+				u8t1 = str[ u8t ];
+ 6c8:	f8 01       	movw	r30, r16
+ 6ca:	ee 0d       	add	r30, r14
+ 6cc:	ff 1d       	adc	r31, r15
+ 6ce:	06 c0       	rjmp	.+12     	; 0x6dc <lcd_print_u8+0x64>
+		}	//End If: left alignment
+		//If: right alignment
+		else
+		{
+			//If: I'm outside the number (yes, that's the condition,right adjustment is messy)
+			if ((u8t +ret) < MAX_DIGIT8)
+ 6d0:	c7 01       	movw	r24, r14
+ 6d2:	8a 0d       	add	r24, r10
+ 6d4:	9b 1d       	adc	r25, r11
+ 6d6:	03 97       	sbiw	r24, 0x03	; 3
+ 6d8:	1c f0       	brlt	.+6      	; 0x6e0 <lcd_print_u8+0x68>
+			}
+			//If: I'm writing a digit
+			else
+			{
+				//print number, I have to write digit in a mesi order with this adjust
+				u8t1 = str[ u8t +ret -MAX_DIGIT8 ];
+ 6da:	f6 01       	movw	r30, r12
+ 6dc:	60 81       	ld	r22, Z
+ 6de:	01 c0       	rjmp	.+2      	; 0x6e2 <lcd_print_u8+0x6a>
+ 6e0:	60 e2       	ldi	r22, 0x20	; 32
+			}
+		}	//End If: right alignment
+		//I want to call a single print, I have calculated the argument based on the settings of the print
+		lcd_print_char( pos +u8t, u8t1 );
+ 6e2:	88 2d       	mov	r24, r8
+ 6e4:	8e 0d       	add	r24, r14
+ 6e6:	0e 94 de 01 	call	0x3bc	; 0x3bc <lcd_print_char>
+ 6ea:	08 94       	sec
+ 6ec:	e1 1c       	adc	r14, r1
+ 6ee:	f1 1c       	adc	r15, r1
+ 6f0:	08 94       	sec
+ 6f2:	c1 1c       	adc	r12, r1
+ 6f4:	d1 1c       	adc	r13, r1
+	//***********************************************************************
+
+	//convert the number
+	ret = u8_to_str( num, str );
+	//For: every digit
+	for (u8t = 0;u8t < MAX_DIGIT8; u8t++)
+ 6f6:	f3 e0       	ldi	r31, 0x03	; 3
+ 6f8:	ef 16       	cp	r14, r31
+ 6fa:	f1 04       	cpc	r15, r1
+ 6fc:	f9 f6       	brne	.-66     	; 0x6bc <lcd_print_u8+0x44>
+	//***********************************************************************
+	//	RETURN
+	//***********************************************************************
+
+	return;
+}   //End function: lcd_print_u8
+ 6fe:	0f 90       	pop	r0
+ 700:	0f 90       	pop	r0
+ 702:	0f 90       	pop	r0
+ 704:	0f 90       	pop	r0
+ 706:	cf 91       	pop	r28
+ 708:	df 91       	pop	r29
+ 70a:	1f 91       	pop	r17
+ 70c:	0f 91       	pop	r16
+ 70e:	ff 90       	pop	r15
+ 710:	ef 90       	pop	r14
+ 712:	df 90       	pop	r13
+ 714:	cf 90       	pop	r12
+ 716:	bf 90       	pop	r11
+ 718:	af 90       	pop	r10
+ 71a:	9f 90       	pop	r9
+ 71c:	8f 90       	pop	r8
+ 71e:	08 95       	ret
+
+00000720 <u8_to_str>:
+**	For now I use a naive version
+**
+****************************************************************************/
+
+U8 u8_to_str( U8 num, U8 *str )
+{
+ 720:	cf 92       	push	r12
+ 722:	df 92       	push	r13
+ 724:	ef 92       	push	r14
+ 726:	ff 92       	push	r15
+ 728:	0f 93       	push	r16
+ 72a:	1f 93       	push	r17
+ 72c:	df 93       	push	r29
+ 72e:	cf 93       	push	r28
+ 730:	00 d0       	rcall	.+0      	; 0x732 <u8_to_str+0x12>
+ 732:	0f 92       	push	r0
+ 734:	cd b7       	in	r28, 0x3d	; 61
+ 736:	de b7       	in	r29, 0x3e	; 62
+ 738:	18 2f       	mov	r17, r24
+ 73a:	ab 01       	movw	r20, r22
+	U8 base[] =
+	{
+		100,
+		10,
+		1
+	};
+ 73c:	de 01       	movw	r26, r28
+ 73e:	11 96       	adiw	r26, 0x01	; 1
+ 740:	ea e0       	ldi	r30, 0x0A	; 10
+ 742:	f1 e0       	ldi	r31, 0x01	; 1
+ 744:	83 e0       	ldi	r24, 0x03	; 3
+ 746:	01 90       	ld	r0, Z+
+ 748:	0d 92       	st	X+, r0
+ 74a:	81 50       	subi	r24, 0x01	; 1
+ 74c:	e1 f7       	brne	.-8      	; 0x746 <u8_to_str+0x26>
+ 74e:	7e 01       	movw	r14, r28
+ 750:	08 94       	sec
+ 752:	e1 1c       	adc	r14, r1
+ 754:	f1 1c       	adc	r15, r1
+ 756:	d7 01       	movw	r26, r14
+ 758:	20 e0       	ldi	r18, 0x00	; 0
+ 75a:	91 e0       	ldi	r25, 0x01	; 1
+		}
+		//If: I have a meaningful zero
+		else
+		{
+			//It's a zero
+			str[ index ] = '0';
+ 75c:	00 e3       	ldi	r16, 0x30	; 48
+	index = 0;
+	//this flag is used to blank non meaningful most signficant zeros
+	flag = 1;
+	///Exe
+	//For all bases
+	for (t = 0;t < MAX_DIGIT8; t++)
+ 75e:	84 e0       	ldi	r24, 0x04	; 4
+ 760:	c8 2e       	mov	r12, r24
+ 762:	d1 2c       	mov	r13, r1
+ 764:	cc 0e       	add	r12, r28
+ 766:	dd 1e       	adc	r13, r29
+	{
+		//If the base is bigger or equal than the number (division is meaningful)
+		if (base[t] <= num)
+ 768:	3c 91       	ld	r19, X
+ 76a:	13 17       	cp	r17, r19
+ 76c:	88 f0       	brcs	.+34     	; 0x790 <u8_to_str+0x70>
+		{
+			//Divide number by base, get the digit
+			u8t = num/base[t];
+ 76e:	81 2f       	mov	r24, r17
+ 770:	63 2f       	mov	r22, r19
+ 772:	0e 94 7c 06 	call	0xcf8	; 0xcf8 <__udivmodqi4>
+			//Write the digit
+			str[ index ] = '0' +u8t;
+ 776:	fa 01       	movw	r30, r20
+ 778:	e2 0f       	add	r30, r18
+ 77a:	f1 1d       	adc	r31, r1
+ 77c:	80 5d       	subi	r24, 0xD0	; 208
+ 77e:	80 83       	st	Z, r24
+ 780:	80 53       	subi	r24, 0x30	; 48
+			//Update the number
+			num = num - base[t] * u8t;
+ 782:	83 9f       	mul	r24, r19
+ 784:	80 2d       	mov	r24, r0
+ 786:	11 24       	eor	r1, r1
+ 788:	18 1b       	sub	r17, r24
+			//I have found a meaningful digit
+			flag = 0;
+			//Jump to the next digit
+			index++;
+ 78a:	2f 5f       	subi	r18, 0xFF	; 255
+ 78c:	90 e0       	ldi	r25, 0x00	; 0
+ 78e:	0b c0       	rjmp	.+22     	; 0x7a6 <u8_to_str+0x86>
+		}
+		//If: The base is smaller then the number, and I have yet to find a non zero digit, and I'm not to the last digit
+		else if ( (flag == 1) && (t != (MAX_DIGIT8 -1)) )
+ 790:	91 30       	cpi	r25, 0x01	; 1
+ 792:	21 f4       	brne	.+8      	; 0x79c <u8_to_str+0x7c>
+ 794:	8a 2f       	mov	r24, r26
+ 796:	8e 19       	sub	r24, r14
+ 798:	82 30       	cpi	r24, 0x02	; 2
+ 79a:	29 f4       	brne	.+10     	; 0x7a6 <u8_to_str+0x86>
+		}
+		//If: I have a meaningful zero
+		else
+		{
+			//It's a zero
+			str[ index ] = '0';
+ 79c:	fa 01       	movw	r30, r20
+ 79e:	e2 0f       	add	r30, r18
+ 7a0:	f1 1d       	adc	r31, r1
+ 7a2:	00 83       	st	Z, r16
+			//Jump to the next digit
+			index++;
+ 7a4:	2f 5f       	subi	r18, 0xFF	; 255
+ 7a6:	11 96       	adiw	r26, 0x01	; 1
+	index = 0;
+	//this flag is used to blank non meaningful most signficant zeros
+	flag = 1;
+	///Exe
+	//For all bases
+	for (t = 0;t < MAX_DIGIT8; t++)
+ 7a8:	ac 15       	cp	r26, r12
+ 7aa:	bd 05       	cpc	r27, r13
+ 7ac:	e9 f6       	brne	.-70     	; 0x768 <u8_to_str+0x48>
+			//Jump to the next digit
+			index++;
+		}
+	}	//End for: all bases
+	//Append the terminator
+	str[ index ] = '\0';
+ 7ae:	42 0f       	add	r20, r18
+ 7b0:	51 1d       	adc	r21, r1
+ 7b2:	fa 01       	movw	r30, r20
+ 7b4:	10 82       	st	Z, r1
+	//***********************************************************************
+	//	RETURN
+	//***********************************************************************
+
+	return index;
+}   //End function:
+ 7b6:	82 2f       	mov	r24, r18
+ 7b8:	0f 90       	pop	r0
+ 7ba:	0f 90       	pop	r0
+ 7bc:	0f 90       	pop	r0
+ 7be:	cf 91       	pop	r28
+ 7c0:	df 91       	pop	r29
+ 7c2:	1f 91       	pop	r17
+ 7c4:	0f 91       	pop	r16
+ 7c6:	ff 90       	pop	r15
+ 7c8:	ef 90       	pop	r14
+ 7ca:	df 90       	pop	r13
+ 7cc:	cf 90       	pop	r12
+ 7ce:	08 95       	ret
+
+000007d0 <s8_to_str>:
+**	Convert an S8 to string. It's actualy a wrapper of the u8_to_string, it just handle the sign
+**
+****************************************************************************/
+
+U8 s8_to_str( S8 num, U8 *str )
+{
+ 7d0:	98 2f       	mov	r25, r24
+ 7d2:	fb 01       	movw	r30, r22
+ 7d4:	6f 5f       	subi	r22, 0xFF	; 255
+ 7d6:	7f 4f       	sbci	r23, 0xFF	; 255
+	//***********************************************************************
+	//	BODY
+	//***********************************************************************
+
+	//If: negative
+	if (num < 0)
+ 7d8:	87 ff       	sbrs	r24, 7
+ 7da:	05 c0       	rjmp	.+10     	; 0x7e6 <s8_to_str+0x16>
+	{
+		//Write minus '-'
+		str[ 0 ] = '-';
+ 7dc:	8d e2       	ldi	r24, 0x2D	; 45
+ 7de:	80 83       	st	Z, r24
+		//Correct sign
+		u8t = -num;
+		//launch the u8_to_str to the corrected num, but feed the vector shifted by 1 to make room for the sign. save the return value
+		u8t = u8_to_str( u8t, &str[1] );
+ 7e0:	89 2f       	mov	r24, r25
+ 7e2:	81 95       	neg	r24
+ 7e4:	03 c0       	rjmp	.+6      	; 0x7ec <s8_to_str+0x1c>
+	}
+	//If: zero or positive
+	else
+	{
+		//Write minus '+'
+		str[ 0 ] = '+';
+ 7e6:	8b e2       	ldi	r24, 0x2B	; 43
+ 7e8:	80 83       	st	Z, r24
+		//save num, for consistency
+		u8t = +num;
+		//launch the u8_to_str to the corrected num, but feed the vector shifted by 1 to make room for the sign. save the return value
+		u8t = u8_to_str( u8t, &str[1] );
+ 7ea:	89 2f       	mov	r24, r25
+ 7ec:	0e 94 90 03 	call	0x720	; 0x720 <u8_to_str>
+	//	RETURN
+	//***********************************************************************
+
+	//I have the sign, sum 1
+	return (u8t +1);
+}   //End function:
+ 7f0:	8f 5f       	subi	r24, 0xFF	; 255
+ 7f2:	08 95       	ret
+
+000007f4 <u16_to_str>:
+**	For now I use a naive version
+**
+****************************************************************************/
+
+U8 u16_to_str( U16 num, U8 *str )
+{
+ 7f4:	af 92       	push	r10
+ 7f6:	bf 92       	push	r11
+ 7f8:	cf 92       	push	r12
+ 7fa:	df 92       	push	r13
+ 7fc:	ef 92       	push	r14
+ 7fe:	ff 92       	push	r15
+ 800:	0f 93       	push	r16
+ 802:	1f 93       	push	r17
+ 804:	df 93       	push	r29
+ 806:	cf 93       	push	r28
+ 808:	cd b7       	in	r28, 0x3d	; 61
+ 80a:	de b7       	in	r29, 0x3e	; 62
+ 80c:	2a 97       	sbiw	r28, 0x0a	; 10
+ 80e:	0f b6       	in	r0, 0x3f	; 63
+ 810:	f8 94       	cli
+ 812:	de bf       	out	0x3e, r29	; 62
+ 814:	0f be       	out	0x3f, r0	; 63
+ 816:	cd bf       	out	0x3d, r28	; 61
+ 818:	6c 01       	movw	r12, r24
+ 81a:	8b 01       	movw	r16, r22
+		10000,
+		1000,
+		100,
+		10,
+		1
+	};
+ 81c:	de 01       	movw	r26, r28
+ 81e:	11 96       	adiw	r26, 0x01	; 1
+ 820:	e0 e0       	ldi	r30, 0x00	; 0
+ 822:	f1 e0       	ldi	r31, 0x01	; 1
+ 824:	8a e0       	ldi	r24, 0x0A	; 10
+ 826:	01 90       	ld	r0, Z+
+ 828:	0d 92       	st	X+, r0
+ 82a:	81 50       	subi	r24, 0x01	; 1
+ 82c:	e1 f7       	brne	.-8      	; 0x826 <u16_to_str+0x32>
+ 82e:	7e 01       	movw	r14, r28
+ 830:	08 94       	sec
+ 832:	e1 1c       	adc	r14, r1
+ 834:	f1 1c       	adc	r15, r1
+ 836:	bb 24       	eor	r11, r11
+ 838:	40 e0       	ldi	r20, 0x00	; 0
+ 83a:	81 e0       	ldi	r24, 0x01	; 1
+		}
+		//If: I have a meaningful zero
+		else
+		{
+			//It's a zero
+			str[ index ] = '0';
+ 83c:	90 e3       	ldi	r25, 0x30	; 48
+ 83e:	a9 2e       	mov	r10, r25
+	///Exe
+	//For all bases
+	for (t = 0;t < MAX_DIGIT16; t++)
+	{
+		//If the base is bigger or equal than the number (division is meaningful)
+		if (base[t] <= num)
+ 840:	f7 01       	movw	r30, r14
+ 842:	20 81       	ld	r18, Z
+ 844:	31 81       	ldd	r19, Z+1	; 0x01
+ 846:	c2 16       	cp	r12, r18
+ 848:	d3 06       	cpc	r13, r19
+ 84a:	b8 f0       	brcs	.+46     	; 0x87a <u16_to_str+0x86>
+		{
+			//Divide number by base, get the digit
+			u8t = num/base[t];
+ 84c:	c6 01       	movw	r24, r12
+ 84e:	b9 01       	movw	r22, r18
+ 850:	0e 94 88 06 	call	0xd10	; 0xd10 <__udivmodhi4>
+			//Write the digit
+			str[ index ] = '0' +u8t;
+ 854:	f8 01       	movw	r30, r16
+ 856:	e4 0f       	add	r30, r20
+ 858:	f1 1d       	adc	r31, r1
+ 85a:	60 5d       	subi	r22, 0xD0	; 208
+ 85c:	60 83       	st	Z, r22
+ 85e:	60 53       	subi	r22, 0x30	; 48
+			//Update the number
+			num = num - base[t] * u8t;
+ 860:	70 e0       	ldi	r23, 0x00	; 0
+ 862:	62 9f       	mul	r22, r18
+ 864:	c0 01       	movw	r24, r0
+ 866:	63 9f       	mul	r22, r19
+ 868:	90 0d       	add	r25, r0
+ 86a:	72 9f       	mul	r23, r18
+ 86c:	90 0d       	add	r25, r0
+ 86e:	11 24       	eor	r1, r1
+ 870:	c8 1a       	sub	r12, r24
+ 872:	d9 0a       	sbc	r13, r25
+			//I have found a meaningful digit
+			flag = 0;
+			//Jump to the next digit
+			index++;
+ 874:	4f 5f       	subi	r20, 0xFF	; 255
+ 876:	80 e0       	ldi	r24, 0x00	; 0
+ 878:	0a c0       	rjmp	.+20     	; 0x88e <u16_to_str+0x9a>
+		}
+		//If: The base is smaller then the number, and I have yet to find a non zero digit, and I'm not to the last digit
+		else if ( (flag == 1) && (t != (MAX_DIGIT16 -1)) )
+ 87a:	81 30       	cpi	r24, 0x01	; 1
+ 87c:	19 f4       	brne	.+6      	; 0x884 <u16_to_str+0x90>
+ 87e:	f4 e0       	ldi	r31, 0x04	; 4
+ 880:	bf 16       	cp	r11, r31
+ 882:	29 f4       	brne	.+10     	; 0x88e <u16_to_str+0x9a>
+		}
+		//If: I have a meaningful zero
+		else
+		{
+			//It's a zero
+			str[ index ] = '0';
+ 884:	f8 01       	movw	r30, r16
+ 886:	e4 0f       	add	r30, r20
+ 888:	f1 1d       	adc	r31, r1
+ 88a:	a0 82       	st	Z, r10
+			//Jump to the next digit
+			index++;
+ 88c:	4f 5f       	subi	r20, 0xFF	; 255
+	index = 0;
+	//this flag is used to blank non meaningful most signficant zeros
+	flag = 1;
+	///Exe
+	//For all bases
+	for (t = 0;t < MAX_DIGIT16; t++)
+ 88e:	b3 94       	inc	r11
+ 890:	22 e0       	ldi	r18, 0x02	; 2
+ 892:	30 e0       	ldi	r19, 0x00	; 0
+ 894:	e2 0e       	add	r14, r18
+ 896:	f3 1e       	adc	r15, r19
+ 898:	35 e0       	ldi	r19, 0x05	; 5
+ 89a:	b3 16       	cp	r11, r19
+ 89c:	89 f6       	brne	.-94     	; 0x840 <u16_to_str+0x4c>
+			//Jump to the next digit
+			index++;
+		}
+	}	//End for: all bases
+	//Append the terminator
+	str[ index ] = '\0';
+ 89e:	04 0f       	add	r16, r20
+ 8a0:	11 1d       	adc	r17, r1
+ 8a2:	f8 01       	movw	r30, r16
+ 8a4:	10 82       	st	Z, r1
+	//***********************************************************************
+	//	RETURN
+	//***********************************************************************
+
+	return index;
+}   //End function:
+ 8a6:	84 2f       	mov	r24, r20
+ 8a8:	2a 96       	adiw	r28, 0x0a	; 10
+ 8aa:	0f b6       	in	r0, 0x3f	; 63
+ 8ac:	f8 94       	cli
+ 8ae:	de bf       	out	0x3e, r29	; 62
+ 8b0:	0f be       	out	0x3f, r0	; 63
+ 8b2:	cd bf       	out	0x3d, r28	; 61
+ 8b4:	cf 91       	pop	r28
+ 8b6:	df 91       	pop	r29
+ 8b8:	1f 91       	pop	r17
+ 8ba:	0f 91       	pop	r16
+ 8bc:	ff 90       	pop	r15
+ 8be:	ef 90       	pop	r14
+ 8c0:	df 90       	pop	r13
+ 8c2:	cf 90       	pop	r12
+ 8c4:	bf 90       	pop	r11
+ 8c6:	af 90       	pop	r10
+ 8c8:	08 95       	ret
+
+000008ca <s16_to_str>:
+**	Convert an S16 to string. It's actualy a wrapper of the s16_to_string, it just handle the sign
+**
+****************************************************************************/
+
+U8 s16_to_str( S16 num, U8 *str )
+{
+ 8ca:	9c 01       	movw	r18, r24
+ 8cc:	fb 01       	movw	r30, r22
+ 8ce:	6f 5f       	subi	r22, 0xFF	; 255
+ 8d0:	7f 4f       	sbci	r23, 0xFF	; 255
+	//***********************************************************************
+	//	BODY
+	//***********************************************************************
+
+	//If: negative
+	if (num < 0)
+ 8d2:	97 ff       	sbrs	r25, 7
+ 8d4:	07 c0       	rjmp	.+14     	; 0x8e4 <s16_to_str+0x1a>
+	{
+		//Write minus '-'
+		str[ 0 ] = '-';
+ 8d6:	8d e2       	ldi	r24, 0x2D	; 45
+ 8d8:	80 83       	st	Z, r24
+		//Correct sign
+		u16t = -num;
+		//launch the u8_to_str to the corrected num, but feed the vector shifted by 1 to make room for the sign. save the return value
+		u8t = u16_to_str( u16t, &str[1] );
+ 8da:	88 27       	eor	r24, r24
+ 8dc:	99 27       	eor	r25, r25
+ 8de:	82 1b       	sub	r24, r18
+ 8e0:	93 0b       	sbc	r25, r19
+ 8e2:	03 c0       	rjmp	.+6      	; 0x8ea <s16_to_str+0x20>
+	}
+	//If: zero or positive
+	else
+	{
+		//Write minus '+'
+		str[ 0 ] = '+';
+ 8e4:	8b e2       	ldi	r24, 0x2B	; 43
+ 8e6:	80 83       	st	Z, r24
+		//save num, for consistency
+		u16t = +num;
+		//launch the u8_to_str to the corrected num, but feed the vector shifted by 1 to make room for the sign. save the return value
+		u8t = u16_to_str( u16t, &str[1] );
+ 8e8:	c9 01       	movw	r24, r18
+ 8ea:	0e 94 fa 03 	call	0x7f4	; 0x7f4 <u16_to_str>
+	//	RETURN
+	//***********************************************************************
+
+	//I have the sign, sum 1
+	return (u8t +1);
+}   //End function:
+ 8ee:	8f 5f       	subi	r24, 0xFF	; 255
+ 8f0:	08 95       	ret
+
+000008f2 <timer0_init>:
+
+	///**********************************************************************
+	///	CONTROL REGISTER WRITEBACK
+	///**********************************************************************
+
+	TCCR0A = tccr0a_temp;
+ 8f2:	82 e0       	ldi	r24, 0x02	; 2
+ 8f4:	84 bd       	out	0x24, r24	; 36
+	TCCR0B = tccr0b_temp;
+ 8f6:	85 bd       	out	0x25, r24	; 37
+	TIMSK0 = timsk0_temp;
+ 8f8:	80 93 6e 00 	sts	0x006E, r24
+
+	OCR0A = 249;
+ 8fc:	89 ef       	ldi	r24, 0xF9	; 249
+ 8fe:	87 bd       	out	0x27, r24	; 39
+	OCR0B = 0;
+ 900:	18 bc       	out	0x28, r1	; 40
+
+	return;
+}	//end function: timer0_initialisation
+ 902:	08 95       	ret
+
+00000904 <timer1_init>:
+
+	//***********************************************************************
+	//	REGISTER WRITE-BACK
+	//***********************************************************************
+
+	OCR1A 	= 0xffff;
+ 904:	8f ef       	ldi	r24, 0xFF	; 255
+ 906:	9f ef       	ldi	r25, 0xFF	; 255
+ 908:	90 93 89 00 	sts	0x0089, r25
+ 90c:	80 93 88 00 	sts	0x0088, r24
+
+	OCR1B	= 0;
+ 910:	10 92 8b 00 	sts	0x008B, r1
+ 914:	10 92 8a 00 	sts	0x008A, r1
+
+	ICR1 	= 0;
+ 918:	10 92 87 00 	sts	0x0087, r1
+ 91c:	10 92 86 00 	sts	0x0086, r1
+
+	TCCR1A = tccr1a_temp;
+ 920:	10 92 80 00 	sts	0x0080, r1
+	TCCR1B = tccr1b_temp;
+ 924:	88 e0       	ldi	r24, 0x08	; 8
+ 926:	80 93 81 00 	sts	0x0081, r24
+	TCCR1C = tccr1c_temp;
+ 92a:	10 92 82 00 	sts	0x0082, r1
+	TIMSK1 = timsk1_temp;
+ 92e:	82 e0       	ldi	r24, 0x02	; 2
+ 930:	80 93 6f 00 	sts	0x006F, r24
+
+	return;
+}	//end function: timer1_init
+ 934:	08 95       	ret
+
+00000936 <global_init>:
+	//PA3			:
+	//PA4			:
+	//PA5			:
+	//PA6			:
+	//PA7			:
+	PORT_A_CONFIG('R','R','R','R','R','R','R','R');
+ 936:	9f ef       	ldi	r25, 0xFF	; 255
+ 938:	92 b9       	out	0x02, r25	; 2
+ 93a:	11 b8       	out	0x01, r1	; 1
+	//PB3			: Servo 3
+	//PB4			: Servo 4
+	//PB5			: Servo 5
+	//PB6			:
+	//PB7			:
+	PORT_B_CONFIG('L','L','L','L','L','L','L','L');
+ 93c:	15 b8       	out	0x05, r1	; 5
+ 93e:	94 b9       	out	0x04, r25	; 4
+	//PC3			: LCD_RS
+	//PC4			: LCD_D4
+	//PC5			: LCD_D5
+	//PC6			: LCD_D6
+	//PC7			: LCD_D7
+	PORT_C_CONFIG('H','H','L','L','L','L','L','L');
+ 940:	83 e0       	ldi	r24, 0x03	; 3
+ 942:	88 b9       	out	0x08, r24	; 8
+ 944:	97 b9       	out	0x07, r25	; 7
+	//PD3			:
+	//PD4			:
+	//PD5			:
+	//PD6			:
+	//PD7			:
+	PORT_D_CONFIG('R','R','R','R','R','R','R','R');
+ 946:	9b b9       	out	0x0b, r25	; 11
+ 948:	1a b8       	out	0x0a, r1	; 10
+
+	///**********************************************************************
+	///	CONTROL REGISTER WRITEBACK
+	///**********************************************************************
+
+	TCCR0A = tccr0a_temp;
+ 94a:	82 e0       	ldi	r24, 0x02	; 2
+ 94c:	84 bd       	out	0x24, r24	; 36
+	TCCR0B = tccr0b_temp;
+ 94e:	85 bd       	out	0x25, r24	; 37
+	TIMSK0 = timsk0_temp;
+ 950:	80 93 6e 00 	sts	0x006E, r24
+
+	OCR0A = 249;
+ 954:	89 ef       	ldi	r24, 0xF9	; 249
+ 956:	87 bd       	out	0x27, r24	; 39
+	OCR0B = 0;
+ 958:	18 bc       	out	0x28, r1	; 40
+	///**********************************************************************
+
+	//100Hz time base
+	timer0_init();
+	//Precise delay for the servos
+	timer1_init();
+ 95a:	0e 94 82 04 	call	0x904	; 0x904 <timer1_init>
+ 95e:	84 ec       	ldi	r24, 0xC4	; 196
+ 960:	99 e0       	ldi	r25, 0x09	; 9
+ 962:	24 ef       	ldi	r18, 0xF4	; 244
+ 964:	31 e0       	ldi	r19, 0x01	; 1
+ 966:	f9 01       	movw	r30, r18
+ 968:	31 97       	sbiw	r30, 0x01	; 1
+ 96a:	f1 f7       	brne	.-4      	; 0x968 <global_init+0x32>
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+ 96c:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+ 96e:	d9 f7       	brne	.-10     	; 0x966 <global_init+0x30>
+	//Turn OFF Delay
+	//This is meant to allow LCD display to safely power down and reset
+	//If it's too short, the LCD will bug out when quickly doing ON -> OFF -> ON 
+	_delay_ms( LCD_INIT_DELAY );
+	//Power Up the LCD Display
+	CLEAR_BIT( PORTC, 1 );
+ 970:	41 98       	cbi	0x08, 1	; 8
+ 972:	84 ec       	ldi	r24, 0xC4	; 196
+ 974:	99 e0       	ldi	r25, 0x09	; 9
+ 976:	24 ef       	ldi	r18, 0xF4	; 244
+ 978:	31 e0       	ldi	r19, 0x01	; 1
+ 97a:	f9 01       	movw	r30, r18
+ 97c:	31 97       	sbiw	r30, 0x01	; 1
+ 97e:	f1 f7       	brne	.-4      	; 0x97c <global_init+0x46>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+ 980:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+ 982:	d9 f7       	brne	.-10     	; 0x97a <global_init+0x44>
+	//Turn ON Delay
+	//This is meant to give the LCD Display time to safely power Up
+	//Ifit's too short, The LCD will bug out when doing OFF -> ON -> COMMANDS
+	_delay_ms( LCD_INIT_DELAY );
+	//Initialise the display and the driver: Send the sequences that configure the display
+	lcd_init();
+ 984:	0e 94 81 00 	call	0x102	; 0x102 <lcd_init>
+	///	start of any ISR and engaged again at it's bottom to avoid slow nested ISR call,
+	///	if you need nested ISR call then call sei() at the beginning of the ISR
+	///	TIPS: the function to disable all the interrupt is "cli()"
+	///**********************************************************************
+
+	sei();
+ 988:	78 94       	sei
+
+	return;
+}	//end function: global_initialisation
+ 98a:	08 95       	ret
+
+0000098c <__vector_16>:
+**	10000 [Hz]	| LCD
+**	50 [Hz]		| Servo Scan
+****************************************************************************/
+
+ISR( TIMER0_COMPA_vect )
+{
+ 98c:	1f 92       	push	r1
+ 98e:	0f 92       	push	r0
+ 990:	0f b6       	in	r0, 0x3f	; 63
+ 992:	0f 92       	push	r0
+ 994:	11 24       	eor	r1, r1
+ 996:	8f 93       	push	r24
+ 998:	9f 93       	push	r25
+	///----------------------------------------------------------------------
+	///	BODY
+	///----------------------------------------------------------------------
+
+	//Update LCD display (10KHz)
+	f.lcd_update = 1;
+ 99a:	80 91 4c 01 	lds	r24, 0x014C
+ 99e:	81 60       	ori	r24, 0x01	; 1
+ 9a0:	80 93 4c 01 	sts	0x014C, r24
+	//if: counter has reset (50Hz)
+	if (pre == 0)
+ 9a4:	90 91 21 01 	lds	r25, 0x0121
+ 9a8:	99 23       	and	r25, r25
+ 9aa:	31 f4       	brne	.+12     	; 0x9b8 <__vector_16+0x2c>
+	{
+		f.servo_scan = 1;
+ 9ac:	80 91 4c 01 	lds	r24, 0x014C
+ 9b0:	82 60       	ori	r24, 0x02	; 2
+ 9b2:	80 93 4c 01 	sts	0x014C, r24
+ 9b6:	04 c0       	rjmp	.+8      	; 0x9c0 <__vector_16+0x34>
+		//Start a conversion
+		//SET_BIT( ADCSRA, ADSC );
+	}
+	//Advance prescaler counter
+	pre = AT_TOP_INC( pre, (200-1) );
+ 9b8:	97 3c       	cpi	r25, 0xC7	; 199
+ 9ba:	11 f4       	brne	.+4      	; 0x9c0 <__vector_16+0x34>
+ 9bc:	80 e0       	ldi	r24, 0x00	; 0
+ 9be:	02 c0       	rjmp	.+4      	; 0x9c4 <__vector_16+0x38>
+ 9c0:	89 2f       	mov	r24, r25
+ 9c2:	8f 5f       	subi	r24, 0xFF	; 255
+ 9c4:	80 93 21 01 	sts	0x0121, r24
+	
+	///----------------------------------------------------------------------
+	///	RETURN
+	///----------------------------------------------------------------------
+	//	No return in ISR
+}	//end ISR: TIMER0_COMPA_vect
+ 9c8:	9f 91       	pop	r25
+ 9ca:	8f 91       	pop	r24
+ 9cc:	0f 90       	pop	r0
+ 9ce:	0f be       	out	0x3f, r0	; 63
+ 9d0:	0f 90       	pop	r0
+ 9d2:	1f 90       	pop	r1
+ 9d4:	18 95       	reti
+
+000009d6 <__vector_13>:
+*****************************************************************************
+**	This function is a controlled delay used to generate the servos signals
+****************************************************************************/
+
+ISR( TIMER1_COMPA_vect )
+{
+ 9d6:	1f 92       	push	r1
+ 9d8:	0f 92       	push	r0
+ 9da:	0f b6       	in	r0, 0x3f	; 63
+ 9dc:	0f 92       	push	r0
+ 9de:	11 24       	eor	r1, r1
+ 9e0:	1f 93       	push	r17
+ 9e2:	2f 93       	push	r18
+ 9e4:	3f 93       	push	r19
+ 9e6:	4f 93       	push	r20
+ 9e8:	5f 93       	push	r21
+ 9ea:	6f 93       	push	r22
+ 9ec:	7f 93       	push	r23
+ 9ee:	8f 93       	push	r24
+ 9f0:	9f 93       	push	r25
+ 9f2:	af 93       	push	r26
+ 9f4:	bf 93       	push	r27
+ 9f6:	ef 93       	push	r30
+ 9f8:	ff 93       	push	r31
+	//	>If not valid
+	//		>stop Timer 1
+	//	>write back status var
+
+	//fetch status var
+	cnt = servo_cnt;
+ 9fa:	10 91 1d 01 	lds	r17, 0x011D
+	//If i still have a pending servo, pull it down
+	if (cnt < N_SERVOS)
+ 9fe:	17 30       	cpi	r17, 0x07	; 7
+ a00:	08 f5       	brcc	.+66     	; 0xa44 <__vector_13+0x6e>
+	{
+		//pull down line
+		CLEAR_BIT( SERVO_PORT, cnt +SERVO_PIN_OFFSET );
+ a02:	25 b1       	in	r18, 0x05	; 5
+ a04:	41 e0       	ldi	r20, 0x01	; 1
+ a06:	50 e0       	ldi	r21, 0x00	; 0
+ a08:	ca 01       	movw	r24, r20
+ a0a:	01 2e       	mov	r0, r17
+ a0c:	02 c0       	rjmp	.+4      	; 0xa12 <__vector_13+0x3c>
+ a0e:	88 0f       	add	r24, r24
+ a10:	99 1f       	adc	r25, r25
+ a12:	0a 94       	dec	r0
+ a14:	e2 f7       	brpl	.-8      	; 0xa0e <__vector_13+0x38>
+ a16:	80 95       	com	r24
+ a18:	82 23       	and	r24, r18
+ a1a:	85 b9       	out	0x05, r24	; 5
+		//next servo
+		cnt++;
+ a1c:	1f 5f       	subi	r17, 0xFF	; 255
+	}
+	//If i still have servos to do, set the next one up
+	if (cnt < N_SERVOS)
+ a1e:	17 30       	cpi	r17, 0x07	; 7
+ a20:	89 f0       	breq	.+34     	; 0xa44 <__vector_13+0x6e>
+	{
+		//pull up line
+		SET_BIT( SERVO_PORT, cnt +SERVO_PIN_OFFSET );
+ a22:	85 b1       	in	r24, 0x05	; 5
+ a24:	01 2e       	mov	r0, r17
+ a26:	02 c0       	rjmp	.+4      	; 0xa2c <__vector_13+0x56>
+ a28:	44 0f       	add	r20, r20
+ a2a:	55 1f       	adc	r21, r21
+ a2c:	0a 94       	dec	r0
+ a2e:	e2 f7       	brpl	.-8      	; 0xa28 <__vector_13+0x52>
+ a30:	84 2b       	or	r24, r20
+ a32:	85 b9       	out	0x05, r24	; 5
+		//calculate delay (position and times are global variabiles, it's an interpolator)
+		delay 			= servo_calc_delay( cnt );
+ a34:	81 2f       	mov	r24, r17
+ a36:	0e 94 3b 05 	call	0xa76	; 0xa76 <servo_calc_delay>
+		//Store delay on T1
+		OCR1A 			= delay;
+ a3a:	90 93 89 00 	sts	0x0089, r25
+ a3e:	80 93 88 00 	sts	0x0088, r24
+ a42:	05 c0       	rjmp	.+10     	; 0xa4e <__vector_13+0x78>
+	}
+	//If: i did the last servo
+	else
+	{
+		//stop the timer, i'm done
+		STOP_TIMER1();
+ a44:	80 91 81 00 	lds	r24, 0x0081
+ a48:	8e 7f       	andi	r24, 0xFE	; 254
+ a4a:	80 93 81 00 	sts	0x0081, r24
+	}
+	//write back status var
+	servo_cnt = cnt;
+ a4e:	10 93 1d 01 	sts	0x011D, r17
+
+	//***********************************************************************
+	//	RETURN
+	//***********************************************************************
+}	//End ISR: TIMER1_COMPA_vect
+ a52:	ff 91       	pop	r31
+ a54:	ef 91       	pop	r30
+ a56:	bf 91       	pop	r27
+ a58:	af 91       	pop	r26
+ a5a:	9f 91       	pop	r25
+ a5c:	8f 91       	pop	r24
+ a5e:	7f 91       	pop	r23
+ a60:	6f 91       	pop	r22
+ a62:	5f 91       	pop	r21
+ a64:	4f 91       	pop	r20
+ a66:	3f 91       	pop	r19
+ a68:	2f 91       	pop	r18
+ a6a:	1f 91       	pop	r17
+ a6c:	0f 90       	pop	r0
+ a6e:	0f be       	out	0x3f, r0	; 63
+ a70:	0f 90       	pop	r0
+ a72:	1f 90       	pop	r1
+ a74:	18 95       	reti
+
+00000a76 <servo_calc_delay>:
+**	xpos = xtarget if ABS(xtarget -xpos) < xspeed/50
+**	delay[OCR] = K0 + K1*xoff + K1*xpos
+****************************************************************************/
+
+U16 servo_calc_delay( U8 index )
+{
+ a76:	ef 92       	push	r14
+ a78:	ff 92       	push	r15
+ a7a:	0f 93       	push	r16
+ a7c:	1f 93       	push	r17
+ a7e:	cf 93       	push	r28
+ a80:	df 93       	push	r29
+	//	>calculate new delay (apply delay change)
+	//	>save delay on servo_delay
+	//	>return new delay
+		///Calculate target OCR of servo [index]
+	//Calculate position dependent coefficient
+	s16t 	= K1 *servo_off[ index ] +K1 *servo_target_pos[ index ];
+ a82:	08 2f       	mov	r16, r24
+ a84:	10 e0       	ldi	r17, 0x00	; 0
+ a86:	f8 01       	movw	r30, r16
+ a88:	e5 5a       	subi	r30, 0xA5	; 165
+ a8a:	fe 4f       	sbci	r31, 0xFE	; 254
+ a8c:	20 81       	ld	r18, Z
+ a8e:	33 27       	eor	r19, r19
+ a90:	27 fd       	sbrc	r18, 7
+ a92:	30 95       	com	r19
+ a94:	f8 01       	movw	r30, r16
+ a96:	ec 5a       	subi	r30, 0xAC	; 172
+ a98:	fe 4f       	sbci	r31, 0xFE	; 254
+ a9a:	80 81       	ld	r24, Z
+ a9c:	99 27       	eor	r25, r25
+ a9e:	87 fd       	sbrc	r24, 7
+ aa0:	90 95       	com	r25
+ aa2:	28 0f       	add	r18, r24
+ aa4:	39 1f       	adc	r19, r25
+ aa6:	8e e8       	ldi	r24, 0x8E	; 142
+ aa8:	90 e0       	ldi	r25, 0x00	; 0
+ aaa:	28 9f       	mul	r18, r24
+ aac:	a0 01       	movw	r20, r0
+ aae:	29 9f       	mul	r18, r25
+ ab0:	50 0d       	add	r21, r0
+ ab2:	38 9f       	mul	r19, r24
+ ab4:	50 0d       	add	r21, r0
+ ab6:	11 24       	eor	r1, r1
+	//apply sign correction
+	if (IS_BIT_ONE( SERVO_DIR, index ))
+ ab8:	c1 e0       	ldi	r28, 0x01	; 1
+ aba:	d0 e0       	ldi	r29, 0x00	; 0
+ abc:	00 2e       	mov	r0, r16
+ abe:	02 c0       	rjmp	.+4      	; 0xac4 <servo_calc_delay+0x4e>
+ ac0:	cc 0f       	add	r28, r28
+ ac2:	dd 1f       	adc	r29, r29
+ ac4:	0a 94       	dec	r0
+ ac6:	e2 f7       	brpl	.-8      	; 0xac0 <servo_calc_delay+0x4a>
+ ac8:	ce 01       	movw	r24, r28
+ aca:	86 77       	andi	r24, 0x76	; 118
+ acc:	90 70       	andi	r25, 0x00	; 0
+ ace:	8c 17       	cp	r24, r28
+ ad0:	9d 07       	cpc	r25, r29
+ ad2:	19 f4       	brne	.+6      	; 0xada <servo_calc_delay+0x64>
+	{
+		s16t = -s16t;
+ ad4:	50 95       	com	r21
+ ad6:	41 95       	neg	r20
+ ad8:	5f 4f       	sbci	r21, 0xFF	; 255
+	}
+	delay	= K0 + s16t;
+ ada:	20 e3       	ldi	r18, 0x30	; 48
+ adc:	e2 2e       	mov	r14, r18
+ ade:	25 e7       	ldi	r18, 0x75	; 117
+ ae0:	f2 2e       	mov	r15, r18
+ ae2:	e4 0e       	add	r14, r20
+ ae4:	f5 1e       	adc	r15, r21
+		///Speed Limiter
+	//calculate maximum allowed motion. I need to convert from [unit/second] -> [unit/20mS]
+	slew_rate = K1*servo_target_speed[ index ] /50;
+ ae6:	f8 01       	movw	r30, r16
+ ae8:	e3 5b       	subi	r30, 0xB3	; 179
+ aea:	fe 4f       	sbci	r31, 0xFE	; 254
+ aec:	90 81       	ld	r25, Z
+ aee:	8e e8       	ldi	r24, 0x8E	; 142
+ af0:	98 9f       	mul	r25, r24
+ af2:	c0 01       	movw	r24, r0
+ af4:	11 24       	eor	r1, r1
+ af6:	62 e3       	ldi	r22, 0x32	; 50
+ af8:	70 e0       	ldi	r23, 0x00	; 0
+ afa:	0e 94 9c 06 	call	0xd38	; 0xd38 <__divmodhi4>
+ afe:	ab 01       	movw	r20, r22
+ b00:	22 e0       	ldi	r18, 0x02	; 2
+ b02:	68 37       	cpi	r22, 0x78	; 120
+ b04:	72 07       	cpc	r23, r18
+ b06:	14 f0       	brlt	.+4      	; 0xb0c <servo_calc_delay+0x96>
+ b08:	47 e7       	ldi	r20, 0x77	; 119
+ b0a:	52 e0       	ldi	r21, 0x02	; 2
+	{
+		//Clip the Slew rate
+		slew_rate = SERVO_MAX_SLEW_RATE;
+	}
+	//calculate slew rate required to meet user input
+	s16t = delay - servo_delay[ index ];
+ b0c:	f8 01       	movw	r30, r16
+ b0e:	ee 0f       	add	r30, r30
+ b10:	ff 1f       	adc	r31, r31
+ b12:	ee 59       	subi	r30, 0x9E	; 158
+ b14:	fe 4f       	sbci	r31, 0xFE	; 254
+ b16:	01 90       	ld	r0, Z+
+ b18:	f0 81       	ld	r31, Z
+ b1a:	e0 2d       	mov	r30, r0
+ b1c:	b7 01       	movw	r22, r14
+ b1e:	6e 1b       	sub	r22, r30
+ b20:	7f 0b       	sbc	r23, r31
+	if (s16t > +slew_rate)
+ b22:	46 17       	cp	r20, r22
+ b24:	57 07       	cpc	r21, r23
+ b26:	5c f4       	brge	.+22     	; 0xb3e <servo_calc_delay+0xc8>
+	{
+		//I'm NOT locked: the servo is moving at max speed
+		CLEAR_BIT( servo_lock, index );
+ b28:	be 01       	movw	r22, r28
+ b2a:	60 95       	com	r22
+ b2c:	80 91 22 01 	lds	r24, 0x0122
+ b30:	86 23       	and	r24, r22
+ b32:	80 93 22 01 	sts	0x0122, r24
+		ret = servo_delay[ index ] +slew_rate;
+ b36:	9a 01       	movw	r18, r20
+ b38:	2e 0f       	add	r18, r30
+ b3a:	3f 1f       	adc	r19, r31
+ b3c:	16 c0       	rjmp	.+44     	; 0xb6a <servo_calc_delay+0xf4>
+	}
+	else if (s16t < -slew_rate)
+ b3e:	88 27       	eor	r24, r24
+ b40:	99 27       	eor	r25, r25
+ b42:	84 1b       	sub	r24, r20
+ b44:	95 0b       	sbc	r25, r21
+ b46:	20 91 22 01 	lds	r18, 0x0122
+ b4a:	68 17       	cp	r22, r24
+ b4c:	79 07       	cpc	r23, r25
+ b4e:	4c f4       	brge	.+18     	; 0xb62 <servo_calc_delay+0xec>
+	{
+		//I'm NOT locked: the servo is moving at max speed
+		CLEAR_BIT( servo_lock, index );
+ b50:	be 01       	movw	r22, r28
+ b52:	60 95       	com	r22
+ b54:	26 23       	and	r18, r22
+ b56:	20 93 22 01 	sts	0x0122, r18
+		ret = servo_delay[ index ] -slew_rate;
+ b5a:	9f 01       	movw	r18, r30
+ b5c:	24 1b       	sub	r18, r20
+ b5e:	35 0b       	sbc	r19, r21
+ b60:	04 c0       	rjmp	.+8      	; 0xb6a <servo_calc_delay+0xf4>
+	}
+	else
+	{
+		//I'm locked: The motor is not moving at max speed
+		SET_BIT( servo_lock, index );
+ b62:	2c 2b       	or	r18, r28
+ b64:	20 93 22 01 	sts	0x0122, r18
+ b68:	97 01       	movw	r18, r14
+		ret = delay;
+	}
+	//Write back result and return the delay
+	servo_delay[ index ] = ret;
+ b6a:	00 0f       	add	r16, r16
+ b6c:	11 1f       	adc	r17, r17
+ b6e:	0e 59       	subi	r16, 0x9E	; 158
+ b70:	1e 4f       	sbci	r17, 0xFE	; 254
+ b72:	f8 01       	movw	r30, r16
+ b74:	31 83       	std	Z+1, r19	; 0x01
+ b76:	20 83       	st	Z, r18
+	///--------------------------------------------------------------------------
+	///	RETURN
+	///--------------------------------------------------------------------------	
+
+	return ret;
+}	//end function: servo_calc_delay
+ b78:	c9 01       	movw	r24, r18
+ b7a:	df 91       	pop	r29
+ b7c:	cf 91       	pop	r28
+ b7e:	1f 91       	pop	r17
+ b80:	0f 91       	pop	r16
+ b82:	ff 90       	pop	r15
+ b84:	ef 90       	pop	r14
+ b86:	08 95       	ret
+
+00000b88 <main>:
+/****************************************************************************
+**	MAIN
+****************************************************************************/
+
+int main( void )
+{
+ b88:	ef 92       	push	r14
+ b8a:	ff 92       	push	r15
+ b8c:	0f 93       	push	r16
+ b8e:	1f 93       	push	r17
+	///**********************************************************************
+	///	VARIABILES INITIALISATION
+	///**********************************************************************
+	
+	//Correct mechanical offsets of the servos
+	servo_off[ SERVO_FDX ] 		= -3;
+ b90:	9d ef       	ldi	r25, 0xFD	; 253
+ b92:	90 93 54 01 	sts	0x0154, r25
+	servo_off[ SERVO_FSX ] 		= +2;
+ b96:	82 e0       	ldi	r24, 0x02	; 2
+ b98:	80 93 55 01 	sts	0x0155, r24
+	servo_off[ SERVO_RDX ] 		= -3;
+ b9c:	90 93 56 01 	sts	0x0156, r25
+	servo_off[ SERVO_RSX ] 		= +2;
+ ba0:	80 93 57 01 	sts	0x0157, r24
+	servo_off[ SERVO_FHIP ] 	= +0;
+ ba4:	10 92 58 01 	sts	0x0158, r1
+	servo_off[ SERVO_RHIP ] 	= +12;
+ ba8:	8c e0       	ldi	r24, 0x0C	; 12
+ baa:	80 93 59 01 	sts	0x0159, r24
+	servo_off[ SERVO_TORSO ] 	= +0;
+ bae:	10 92 5a 01 	sts	0x015A, r1
+ bb2:	a2 e6       	ldi	r26, 0x62	; 98
+ bb4:	b1 e0       	ldi	r27, 0x01	; 1
+ bb6:	80 e0       	ldi	r24, 0x00	; 0
+ bb8:	90 e0       	ldi	r25, 0x00	; 0
+
+	//Clear global servo time
+	//Initialize servo position to zero (offset is accounted for during calculations, i must not add it here)
+	for (u8t = 0;u8t < N_SERVOS;u8t++)
+	{
+		servo_delay[u8t] 		= K0;	//Servo true position
+ bba:	20 e3       	ldi	r18, 0x30	; 48
+ bbc:	35 e7       	ldi	r19, 0x75	; 117
+		servo_target_pos[u8t] 	= +0;	//Servo targt position (user)
+		servo_target_speed[u8t]	= 80;	//Servo target speed (default)
+ bbe:	40 e5       	ldi	r20, 0x50	; 80
+
+	//Clear global servo time
+	//Initialize servo position to zero (offset is accounted for during calculations, i must not add it here)
+	for (u8t = 0;u8t < N_SERVOS;u8t++)
+	{
+		servo_delay[u8t] 		= K0;	//Servo true position
+ bc0:	2d 93       	st	X+, r18
+ bc2:	3d 93       	st	X+, r19
+		servo_target_pos[u8t] 	= +0;	//Servo targt position (user)
+ bc4:	fc 01       	movw	r30, r24
+ bc6:	e5 5a       	subi	r30, 0xA5	; 165
+ bc8:	fe 4f       	sbci	r31, 0xFE	; 254
+ bca:	10 82       	st	Z, r1
+		servo_target_speed[u8t]	= 80;	//Servo target speed (default)
+ bcc:	fc 01       	movw	r30, r24
+ bce:	e3 5b       	subi	r30, 0xB3	; 179
+ bd0:	fe 4f       	sbci	r31, 0xFE	; 254
+ bd2:	40 83       	st	Z, r20
+ bd4:	01 96       	adiw	r24, 0x01	; 1
+	servo_off[ SERVO_RHIP ] 	= +12;
+	servo_off[ SERVO_TORSO ] 	= +0;
+
+	//Clear global servo time
+	//Initialize servo position to zero (offset is accounted for during calculations, i must not add it here)
+	for (u8t = 0;u8t < N_SERVOS;u8t++)
+ bd6:	87 30       	cpi	r24, 0x07	; 7
+ bd8:	91 05       	cpc	r25, r1
+ bda:	91 f7       	brne	.-28     	; 0xbc0 <main+0x38>
+	///**********************************************************************
+	///	PHERIPERALS INITIALISATION
+	///**********************************************************************
+
+	//Initialize devices
+	global_init();
+ bdc:	0e 94 9b 04 	call	0x936	; 0x936 <global_init>
+	//The proud name of this unit
+	lcd_print_str( LCD_POS(0,0), (U8 *)"Unit Zero");
+ be0:	80 e0       	ldi	r24, 0x00	; 0
+ be2:	6d e0       	ldi	r22, 0x0D	; 13
+ be4:	71 e0       	ldi	r23, 0x01	; 1
+ be6:	0e 94 04 02 	call	0x408	; 0x408 <lcd_print_str>
+	lcd_print_str( LCD_POS(1,0), (U8 *)"Time:");
+ bea:	80 e1       	ldi	r24, 0x10	; 16
+ bec:	67 e1       	ldi	r22, 0x17	; 23
+ bee:	71 e0       	ldi	r23, 0x01	; 1
+ bf0:	0e 94 04 02 	call	0x408	; 0x408 <lcd_print_str>
+ bf4:	00 e0       	ldi	r16, 0x00	; 0
+ bf6:	10 e0       	ldi	r17, 0x00	; 0
+				servo_target_pos[ SERVO_RHIP ]	= +0;
+			}
+			//reset leg
+			else if (status_traj == 4)
+			{
+				servo_target_pos[ SERVO_FDX ]	= -s8t;
+ bf8:	4e ec       	ldi	r20, 0xCE	; 206
+ bfa:	e4 2e       	mov	r14, r20
+				servo_target_pos[ SERVO_RHIP ]	= +0;
+			}
+			//Leg
+			else if (status_traj == 2)
+			{
+				servo_target_pos[ SERVO_FDX ]	= +s8t;
+ bfc:	32 e3       	ldi	r19, 0x32	; 50
+ bfe:	f3 2e       	mov	r15, r19
+		//	LCD DIPSPLAY UPDATE
+		//-----------------------------------------------------------------------
+		//	call the lcd display driver
+
+		//If: update the LCD display (10KHz)
+		if (f.lcd_update == 1)
+ c00:	80 91 4c 01 	lds	r24, 0x014C
+ c04:	80 ff       	sbrs	r24, 0
+ c06:	07 c0       	rjmp	.+14     	; 0xc16 <main+0x8e>
+		{
+			f.lcd_update = 0;
+ c08:	80 91 4c 01 	lds	r24, 0x014C
+ c0c:	8e 7f       	andi	r24, 0xFE	; 254
+ c0e:	80 93 4c 01 	sts	0x014C, r24
+			//Update display
+			lcd_update();
+ c12:	0e 94 a2 00 	call	0x144	; 0x144 <lcd_update>
+		//	>calculate first delay, pull down first line
+		//	>setup first delay, enable [Timer 1]
+		//	>Timer 1 ISR will handle the update of the servos and disable it self when done
+
+		//If: Start Servo Scan (50Hz)
+		if (f.servo_scan == 1)
+ c16:	80 91 4c 01 	lds	r24, 0x014C
+ c1a:	81 ff       	sbrs	r24, 1
+ c1c:	2b c0       	rjmp	.+86     	; 0xc74 <main+0xec>
+		{
+			//clear flag
+			f.servo_scan = 0;
+ c1e:	80 91 4c 01 	lds	r24, 0x014C
+ c22:	8d 7f       	andi	r24, 0xFD	; 253
+ c24:	80 93 4c 01 	sts	0x014C, r24
+				//Startup the servo scan
+			//clear status var
+			servo_cnt 	= 0;
+ c28:	10 92 1d 01 	sts	0x011D, r1
+			//calculate delay
+			u16t		= servo_calc_delay( 0 );
+ c2c:	80 e0       	ldi	r24, 0x00	; 0
+ c2e:	0e 94 3b 05 	call	0xa76	; 0xa76 <servo_calc_delay>
+			//Store delay on T1
+			OCR1A 		= u16t;
+ c32:	90 93 89 00 	sts	0x0089, r25
+ c36:	80 93 88 00 	sts	0x0088, r24
+			//start T1
+			START_TIMER1();
+ c3a:	80 91 81 00 	lds	r24, 0x0081
+ c3e:	81 60       	ori	r24, 0x01	; 1
+ c40:	80 93 81 00 	sts	0x0081, r24
+			//pull up first line
+			SET_BIT( SERVO_PORT, 0 +SERVO_PIN_OFFSET );
+ c44:	28 9a       	sbi	0x05, 0	; 5
+				//Advance global time by one tick
+			servo_global_time++;
+ c46:	60 91 23 01 	lds	r22, 0x0123
+ c4a:	70 91 24 01 	lds	r23, 0x0124
+ c4e:	6f 5f       	subi	r22, 0xFF	; 255
+ c50:	7f 4f       	sbci	r23, 0xFF	; 255
+ c52:	70 93 24 01 	sts	0x0124, r23
+ c56:	60 93 23 01 	sts	0x0123, r22
+			lcd_print_u16( LCD_POS(1,6), servo_global_time );
+ c5a:	86 e1       	ldi	r24, 0x16	; 22
+ c5c:	0e 94 8a 02 	call	0x514	; 0x514 <lcd_print_u16>
+
+			pre_traj = AT_TOP_INC( pre_traj, 25 );
+ c60:	09 31       	cpi	r16, 0x19	; 25
+ c62:	11 f0       	breq	.+4      	; 0xc68 <main+0xe0>
+ c64:	0f 5f       	subi	r16, 0xFF	; 255
+			if (pre_traj == 0)
+ c66:	31 f4       	brne	.+12     	; 0xc74 <main+0xec>
+			{
+				f.servo_traj = 1;
+ c68:	80 91 4c 01 	lds	r24, 0x014C
+ c6c:	84 60       	ori	r24, 0x04	; 4
+ c6e:	80 93 4c 01 	sts	0x014C, r24
+ c72:	00 e0       	ldi	r16, 0x00	; 0
+
+		//-----------------------------------------------------------------------
+		//	TRAJECTORY GENERATION
+		//-----------------------------------------------------------------------
+
+		if (f.servo_traj == 1)
+ c74:	80 91 4c 01 	lds	r24, 0x014C
+ c78:	82 ff       	sbrs	r24, 2
+ c7a:	c2 cf       	rjmp	.-124    	; 0xc00 <main+0x78>
+		{
+			f.servo_traj = 0;
+ c7c:	80 91 4c 01 	lds	r24, 0x014C
+ c80:	8b 7f       	andi	r24, 0xFB	; 251
+ c82:	80 93 4c 01 	sts	0x014C, r24
+			s8t = 50;
+			//Upright
+			if (status_traj == 0)
+ c86:	11 23       	and	r17, r17
+ c88:	41 f4       	brne	.+16     	; 0xc9a <main+0x112>
+ c8a:	eb e5       	ldi	r30, 0x5B	; 91
+ c8c:	f1 e0       	ldi	r31, 0x01	; 1
+			{
+				//Initialize servo position to zero (offset is accounted for during calculations, i must not add it here)
+				for (u8t = 0;u8t < N_SERVOS;u8t++)
+				{
+					servo_target_pos[u8t] 	= 0;	//Servo targt position (user)	
+ c8e:	11 92       	st	Z+, r1
+			s8t = 50;
+			//Upright
+			if (status_traj == 0)
+			{
+				//Initialize servo position to zero (offset is accounted for during calculations, i must not add it here)
+				for (u8t = 0;u8t < N_SERVOS;u8t++)
+ c90:	81 e0       	ldi	r24, 0x01	; 1
+ c92:	e2 36       	cpi	r30, 0x62	; 98
+ c94:	f8 07       	cpc	r31, r24
+ c96:	d9 f7       	brne	.-10     	; 0xc8e <main+0x106>
+ c98:	2d c0       	rjmp	.+90     	; 0xcf4 <main+0x16c>
+				{
+					servo_target_pos[u8t] 	= 0;	//Servo targt position (user)	
+				}	
+			}
+			//Hip
+			else if (status_traj == 1)
+ c9a:	11 30       	cpi	r17, 0x01	; 1
+ c9c:	69 f0       	breq	.+26     	; 0xcb8 <main+0x130>
+				servo_target_pos[ SERVO_RSX ]	= +0;
+				servo_target_pos[ SERVO_FHIP ]	= +0;
+				servo_target_pos[ SERVO_RHIP ]	= +0;
+			}
+			//Leg
+			else if (status_traj == 2)
+ c9e:	12 30       	cpi	r17, 0x02	; 2
+ ca0:	49 f4       	brne	.+18     	; 0xcb4 <main+0x12c>
+			{
+				servo_target_pos[ SERVO_FDX ]	= +s8t;
+ ca2:	f0 92 5b 01 	sts	0x015B, r15
+				servo_target_pos[ SERVO_FSX ]	= +s8t;
+ ca6:	f0 92 5c 01 	sts	0x015C, r15
+				servo_target_pos[ SERVO_RDX ]	= +s8t;
+ caa:	f0 92 5d 01 	sts	0x015D, r15
+				servo_target_pos[ SERVO_RSX ]	= +s8t;
+ cae:	f0 92 5e 01 	sts	0x015E, r15
+ cb2:	0a c0       	rjmp	.+20     	; 0xcc8 <main+0x140>
+				servo_target_pos[ SERVO_FHIP ]	= +0;
+				servo_target_pos[ SERVO_RHIP ]	= +0;
+			}
+			//Reverse Hip
+			else if (status_traj == 3)
+ cb4:	13 30       	cpi	r17, 0x03	; 3
+ cb6:	69 f4       	brne	.+26     	; 0xcd2 <main+0x14a>
+			{
+				servo_target_pos[ SERVO_FDX ]	= +0;
+ cb8:	10 92 5b 01 	sts	0x015B, r1
+				servo_target_pos[ SERVO_FSX ]	= +0;
+ cbc:	10 92 5c 01 	sts	0x015C, r1
+				servo_target_pos[ SERVO_RDX ]	= +0;
+ cc0:	10 92 5d 01 	sts	0x015D, r1
+				servo_target_pos[ SERVO_RSX ]	= +0;
+ cc4:	10 92 5e 01 	sts	0x015E, r1
+				servo_target_pos[ SERVO_FHIP ]	= +0;
+ cc8:	10 92 5f 01 	sts	0x015F, r1
+				servo_target_pos[ SERVO_RHIP ]	= +0;
+ ccc:	10 92 60 01 	sts	0x0160, r1
+ cd0:	11 c0       	rjmp	.+34     	; 0xcf4 <main+0x16c>
+			}
+			//reset leg
+			else if (status_traj == 4)
+ cd2:	14 30       	cpi	r17, 0x04	; 4
+ cd4:	11 f0       	breq	.+4      	; 0xcda <main+0x152>
+ cd6:	1f ef       	ldi	r17, 0xFF	; 255
+ cd8:	0d c0       	rjmp	.+26     	; 0xcf4 <main+0x16c>
+			{
+				servo_target_pos[ SERVO_FDX ]	= -s8t;
+ cda:	e0 92 5b 01 	sts	0x015B, r14
+				servo_target_pos[ SERVO_FSX ]	= -s8t;
+ cde:	e0 92 5c 01 	sts	0x015C, r14
+				servo_target_pos[ SERVO_RDX ]	= -s8t;
+ ce2:	e0 92 5d 01 	sts	0x015D, r14
+				servo_target_pos[ SERVO_RSX ]	= -s8t;
+ ce6:	e0 92 5e 01 	sts	0x015E, r14
+				servo_target_pos[ SERVO_FHIP ]	= +0;
+ cea:	10 92 5f 01 	sts	0x015F, r1
+				servo_target_pos[ SERVO_RHIP ]	= +0;
+ cee:	10 92 60 01 	sts	0x0160, r1
+ cf2:	10 e0       	ldi	r17, 0x00	; 0
+			//
+			else 
+			{
+				status_traj = 255;
+			}
+			status_traj++;
+ cf4:	1f 5f       	subi	r17, 0xFF	; 255
+ cf6:	84 cf       	rjmp	.-248    	; 0xc00 <main+0x78>
+
+00000cf8 <__udivmodqi4>:
+ cf8:	99 1b       	sub	r25, r25
+ cfa:	79 e0       	ldi	r23, 0x09	; 9
+ cfc:	04 c0       	rjmp	.+8      	; 0xd06 <__udivmodqi4_ep>
+
+00000cfe <__udivmodqi4_loop>:
+ cfe:	99 1f       	adc	r25, r25
+ d00:	96 17       	cp	r25, r22
+ d02:	08 f0       	brcs	.+2      	; 0xd06 <__udivmodqi4_ep>
+ d04:	96 1b       	sub	r25, r22
+
+00000d06 <__udivmodqi4_ep>:
+ d06:	88 1f       	adc	r24, r24
+ d08:	7a 95       	dec	r23
+ d0a:	c9 f7       	brne	.-14     	; 0xcfe <__udivmodqi4_loop>
+ d0c:	80 95       	com	r24
+ d0e:	08 95       	ret
+
+00000d10 <__udivmodhi4>:
+ d10:	aa 1b       	sub	r26, r26
+ d12:	bb 1b       	sub	r27, r27
+ d14:	51 e1       	ldi	r21, 0x11	; 17
+ d16:	07 c0       	rjmp	.+14     	; 0xd26 <__udivmodhi4_ep>
+
+00000d18 <__udivmodhi4_loop>:
+ d18:	aa 1f       	adc	r26, r26
+ d1a:	bb 1f       	adc	r27, r27
+ d1c:	a6 17       	cp	r26, r22
+ d1e:	b7 07       	cpc	r27, r23
+ d20:	10 f0       	brcs	.+4      	; 0xd26 <__udivmodhi4_ep>
+ d22:	a6 1b       	sub	r26, r22
+ d24:	b7 0b       	sbc	r27, r23
+
+00000d26 <__udivmodhi4_ep>:
+ d26:	88 1f       	adc	r24, r24
+ d28:	99 1f       	adc	r25, r25
+ d2a:	5a 95       	dec	r21
+ d2c:	a9 f7       	brne	.-22     	; 0xd18 <__udivmodhi4_loop>
+ d2e:	80 95       	com	r24
+ d30:	90 95       	com	r25
+ d32:	bc 01       	movw	r22, r24
+ d34:	cd 01       	movw	r24, r26
+ d36:	08 95       	ret
+
+00000d38 <__divmodhi4>:
+ d38:	97 fb       	bst	r25, 7
+ d3a:	09 2e       	mov	r0, r25
+ d3c:	07 26       	eor	r0, r23
+ d3e:	0a d0       	rcall	.+20     	; 0xd54 <__divmodhi4_neg1>
+ d40:	77 fd       	sbrc	r23, 7
+ d42:	04 d0       	rcall	.+8      	; 0xd4c <__divmodhi4_neg2>
+ d44:	e5 df       	rcall	.-54     	; 0xd10 <__udivmodhi4>
+ d46:	06 d0       	rcall	.+12     	; 0xd54 <__divmodhi4_neg1>
+ d48:	00 20       	and	r0, r0
+ d4a:	1a f4       	brpl	.+6      	; 0xd52 <__divmodhi4_exit>
+
+00000d4c <__divmodhi4_neg2>:
+ d4c:	70 95       	com	r23
+ d4e:	61 95       	neg	r22
+ d50:	7f 4f       	sbci	r23, 0xFF	; 255
+
+00000d52 <__divmodhi4_exit>:
+ d52:	08 95       	ret
+
+00000d54 <__divmodhi4_neg1>:
+ d54:	f6 f7       	brtc	.-4      	; 0xd52 <__divmodhi4_exit>
+ d56:	90 95       	com	r25
+ d58:	81 95       	neg	r24
+ d5a:	9f 4f       	sbci	r25, 0xFF	; 255
+ d5c:	08 95       	ret
+
+00000d5e <_exit>:
+ d5e:	f8 94       	cli
+
+00000d60 <__stop_program>:
+ d60:	ff cf       	rjmp	.-2      	; 0xd60 <__stop_program>
